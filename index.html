@@ -42,7 +42,7 @@
         /* -------------------------
            사이드바 및 오버레이 (목록 바)
         -------------------------- */
-        .sidebar-overlay { display: none; } /* PC에서는 오버레이 숨김 */
+        .sidebar-overlay { display: none; }
         
         .sidebar { position: fixed; top: 56px; left: 0; width: 240px; height: calc(100vh - 56px); background-color: #fff; display: flex; flex-direction: column; padding: 12px 12px 0; overflow-y: auto; z-index: 999; border-right: 1px solid #e5e5e5; }
         .sidebar-item { display: flex; align-items: center; gap: 24px; padding: 10px 12px; cursor: pointer; border-radius: 10px; text-decoration: none; color: inherit; margin-bottom: 2px; }
@@ -54,16 +54,30 @@
         /* -------------------------
            메인 콘텐츠
         -------------------------- */
-        .main-content { margin-left: 240px; padding-top: 56px; flex: 1; min-height: 100vh; background-color: #fff; }
+        .main-content { margin-left: 240px; padding-top: 56px; flex: 1; min-height: 100vh; background-color: #fff; width: 100%; }
         .category-chips { display: flex; gap: 12px; padding: 12px 24px; overflow-x: auto; white-space: nowrap; background-color: #fff; position: sticky; top: 56px; z-index: 998; }
         .category-chips::-webkit-scrollbar { display: none; }
         .chip { background-color: rgba(0,0,0,0.05); border: none; padding: 8px 12px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; color: #0f0f0f; }
         .chip.active { background-color: #0f0f0f; color: #fff; }
 
         .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 40px 16px; padding: 24px; }
-        .video-card { display: flex; flex-direction: column; cursor: pointer; text-decoration: none; color: inherit; }
-        .thumbnail-container { position: relative; width: 100%; padding-top: 56.25%; border-radius: 12px; overflow: hidden; background-color: #e5e5e5; }
-        .thumbnail-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+        .video-card { display: flex; flex-direction: column; cursor: pointer; text-decoration: none; color: inherit; width: 100%; }
+        
+        /* 🔥 썸네일 비율 고정 (움직임 방지) 🔥 */
+        .thumbnail-container { 
+            position: relative; 
+            width: 100%; 
+            aspect-ratio: 16 / 9; /* 최신 방식으로 16:9 완벽 고정 */
+            border-radius: 12px; 
+            overflow: hidden; 
+            background-color: #e5e5e5; 
+        }
+        .thumbnail-img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            display: block; 
+        }
         .duration-badge { position: absolute; bottom: 8px; right: 8px; background-color: rgba(0, 0, 0, 0.8); color: #fff; padding: 3px 4px; border-radius: 4px; font-size: 12px; font-weight: 500; }
 
         .info-container { display: flex; margin-top: 12px; gap: 12px; }
@@ -75,43 +89,36 @@
 
         /* 🔥 반응형 미디어 쿼리 (모바일 화면 설정) 🔥 */
         @media (max-width: 768px) {
-            /* 상단 바 좌우 버튼 교체 및 간소화 */
             .header-center { display: none; }
             .create-icon-btn, .notification-icon-btn { display: none; }
-            .menu-icon { display: none; } /* PC용 좌측 햄버거 숨김 */
-            .menu-icon-mobile { display: block; } /* 🔥 모바일용 우측 햄버거 보임 🔥 */
+            .menu-icon { display: none; }
+            .menu-icon-mobile { display: block; } 
             
-            /* 메인 콘텐츠 여백 조정 */
+            /* 🔥 한 화면에 2개 영상 꽉 차게 들어오도록 여백/간격 축소 🔥 */
             .main-content { margin-left: 0; padding-bottom: 20px; }
-            .video-grid { grid-template-columns: 1fr; padding: 0; gap: 24px; }
-            .thumbnail-container { border-radius: 0; }
-            .info-container { padding: 0 12px; }
-            .category-chips { padding: 12px; }
+            .category-chips { padding: 8px 12px; } /* 칩 여백 축소 */
+            .video-grid { 
+                grid-template-columns: 1fr; 
+                padding: 12px 16px; /* 좌우 여백 확보, 상하 여백 축소 */
+                gap: 20px; /* 영상과 영상 사이 간격 축소 */
+            }
+            .info-container { margin-top: 8px; } /* 썸네일과 텍스트 사이 간격 축소 */
+            .video-title { font-size: 15px; margin-bottom: 2px; } /* 제목 크기 미세 조정 */
 
-            /* 🔥 사이드바를 우측으로 이동시키고 기본적으로 숨김 🔥 */
+            /* 사이드바 우측 숨김 세팅 */
             .sidebar { 
-                top: 0; 
-                left: auto;
-                right: 0; /* 우측에 붙임 */
-                height: 100vh; 
-                padding-top: 56px; 
-                transform: translateX(100%); /* 오른쪽 화면 밖으로 완전히 밀어내어 숨김 */
-                transition: transform 0.3s ease-in-out; 
+                top: 0; left: auto; right: 0; height: 100vh; padding-top: 56px; 
+                transform: translateX(100%); transition: transform 0.3s ease-in-out; 
                 box-shadow: -2px 0 12px rgba(0,0,0,0.2);
             }
-            .sidebar.open {
-                transform: translateX(0); /* 버튼 누르면 오른쪽에서 스르륵 나타남 */
-            }
+            .sidebar.open { transform: translateX(0); }
 
-            /* 목록 바 열렸을 때 뒷배경 오버레이 */
             .sidebar-overlay {
                 display: block; position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
                 background-color: rgba(0,0,0,0.5); z-index: 998;
                 opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
             }
-            .sidebar-overlay.open {
-                opacity: 1; pointer-events: auto;
-            }
+            .sidebar-overlay.open { opacity: 1; pointer-events: auto; }
         }
     </style>
 </head>
@@ -215,17 +222,14 @@
         const sidebar = document.getElementById('sidebarMenu');
         const overlay = document.getElementById('sidebarOverlay');
 
-        // 사이드바 토글 함수
         function toggleSidebar() {
             sidebar.classList.toggle('open');
             overlay.classList.toggle('open');
         }
 
-        // PC와 모바일 버튼에 각각 클릭 이벤트 연결
         if (menuBtnPC) menuBtnPC.addEventListener('click', toggleSidebar);
         if (menuBtnMobile) menuBtnMobile.addEventListener('click', toggleSidebar);
 
-        // 어두운 배경 클릭 시 닫기
         overlay.addEventListener('click', () => {
             sidebar.classList.remove('open');
             overlay.classList.remove('open');
