@@ -37,8 +37,10 @@
         .user-avatar { width: 32px; height: 32px; border-radius: 50%; cursor: pointer; object-fit: cover; }
 
         /* -------------------------
-           왼쪽 사이드바 (PC 전용) 
+           사이드바 및 오버레이 (목록 바)
         -------------------------- */
+        .sidebar-overlay { display: none; } /* PC에서는 오버레이 숨김 */
+        
         .sidebar { position: fixed; top: 56px; left: 0; width: 240px; height: calc(100vh - 56px); background-color: #fff; display: flex; flex-direction: column; padding: 12px 12px 0; overflow-y: auto; z-index: 999; border-right: 1px solid #e5e5e5; }
         .sidebar-item { display: flex; align-items: center; gap: 24px; padding: 10px 12px; cursor: pointer; border-radius: 10px; text-decoration: none; color: inherit; margin-bottom: 2px; }
         .sidebar-item:hover { background-color: #f2f2f2; }
@@ -46,9 +48,7 @@
         .sidebar-text { font-size: 14px; color: #0f0f0f; }
         .sidebar-avatar { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; margin-left: -2px; }
 
-        /* -------------------------
-           하단 네비게이션 바 (모바일 전용) - 기본 숨김
-        -------------------------- */
+        /* 하단 네비게이션 바 (모바일 전용) - 기본 숨김 */
         .bottom-nav { display: none; }
 
         /* -------------------------
@@ -56,7 +56,7 @@
         -------------------------- */
         .main-content { margin-left: 240px; padding-top: 56px; flex: 1; min-height: 100vh; background-color: #fff; }
         .category-chips { display: flex; gap: 12px; padding: 12px 24px; overflow-x: auto; white-space: nowrap; background-color: #fff; position: sticky; top: 56px; z-index: 998; }
-        .category-chips::-webkit-scrollbar { display: none; } /* 모바일에서 스크롤바 숨김 */
+        .category-chips::-webkit-scrollbar { display: none; }
         .chip { background-color: rgba(0,0,0,0.05); border: none; padding: 8px 12px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; color: #0f0f0f; }
         .chip.active { background-color: #0f0f0f; color: #fff; }
 
@@ -75,34 +75,49 @@
 
         /* 🔥 반응형 미디어 쿼리 (모바일 화면 설정) 🔥 */
         @media (max-width: 768px) {
-            /* 왼쪽 사이드바 숨기기 */
-            .sidebar { display: none; }
-            .menu-icon { display: none; }
-            
-            /* 메인 콘텐츠 여백 조정 (사이드바 공간 삭제, 하단 네비 공간 확보) */
-            .main-content { margin-left: 0; padding-bottom: 60px; }
-            
-            /* 상단 헤더 간소화 (검색창 숨기고 우측 버튼 간소화) */
+            /* 헤더 간소화 */
             .header-center { display: none; }
             .create-icon-btn { display: none; }
             .header { padding: 0 16px; }
-
-            /* 비디오 카드 모바일 레이아웃 (1열 배치, 썸네일 여백 삭제) */
+            .menu-icon { display: block; } /* 햄버거 메뉴 보이기 */
+            
+            /* 메인 콘텐츠 여백 조정 */
+            .main-content { margin-left: 0; padding-bottom: 60px; }
             .video-grid { grid-template-columns: 1fr; padding: 0; gap: 24px; }
             .thumbnail-container { border-radius: 0; }
             .info-container { padding: 0 12px; }
             .category-chips { padding: 12px; }
 
-            /* 🔥 하단 네비게이션 바 표시 🔥 */
+            /* 🔥 사이드바(목록 바) 기본 숨김 처리 및 애니메이션 추가 🔥 */
+            .sidebar { 
+                top: 0; 
+                height: 100vh; 
+                padding-top: 56px; 
+                transform: translateX(-100%); /* 왼쪽 화면 밖으로 100% 밀어내어 기본적으로 접어둠 */
+                transition: transform 0.3s ease-in-out; /* 부드럽게 열리는 효과 */
+                box-shadow: 2px 0 12px rgba(0,0,0,0.2);
+            }
+            .sidebar.open {
+                transform: translateX(0); /* .open 클래스가 붙으면 화면 안으로 스르륵 들어옴 */
+            }
+
+            /* 목록 바가 열렸을 때 뒷배경을 어둡게 해주는 오버레이 */
+            .sidebar-overlay {
+                display: block; position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+                background-color: rgba(0,0,0,0.5); z-index: 998;
+                opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+            }
+            .sidebar-overlay.open {
+                opacity: 1; pointer-events: auto;
+            }
+
+            /* 하단 네비게이션 바 표시 */
             .bottom-nav { 
                 display: flex; position: fixed; bottom: 0; left: 0; width: 100%; height: 50px; 
-                background-color: #fff; border-top: 1px solid #e5e5e5; z-index: 1000; 
+                background-color: #fff; border-top: 1px solid #e5e5e5; z-index: 900; 
                 justify-content: space-around; align-items: center; padding: 0 8px;
             }
-            .bottom-nav-item { 
-                display: flex; flex-direction: column; align-items: center; gap: 4px; 
-                text-decoration: none; color: #0f0f0f; width: 20%;
-            }
+            .bottom-nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #0f0f0f; width: 20%; }
             .bottom-nav-item .icon { width: 24px; height: 24px; }
             .bottom-nav-text { font-size: 10px; }
             .bottom-nav-avatar { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; }
@@ -113,7 +128,9 @@
 
     <header class="header">
         <div class="header-left">
-            <button class="menu-icon"><div class="icon"><svg viewBox="0 0 24 24"><path d="M21 6H3V5h18v1zm0 5H3v1h18v-1zm0 6H3v1h18v-1z"></path></svg></div></button>
+            <button class="menu-icon" id="menuToggleBtn">
+                <div class="icon"><svg viewBox="0 0 24 24"><path d="M21 6H3V5h18v1zm0 5H3v1h18v-1zm0 6H3v1h18v-1z"></path></svg></div>
+            </button>
             <a href="#" class="logo-container">
                 <div class="logo-play-button"></div>
                 <span class="logo-text">MYTUBE</span>
@@ -133,7 +150,9 @@
         </div>
     </header>
 
-    <nav class="sidebar">
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <nav class="sidebar" id="sidebarMenu">
         <a href="#" class="sidebar-item active">
             <div class="icon"><svg viewBox="0 0 24 24"><path d="M4 21V10.08l8-6.96 8 6.96V21h-6v-6h-4v6H4z"></path></svg></div>
             <span class="sidebar-text">홈</span>
@@ -214,5 +233,22 @@
         </div>
     </main>
 
+    <script>
+        const menuBtn = document.getElementById('menuToggleBtn');
+        const sidebar = document.getElementById('sidebarMenu');
+        const overlay = document.getElementById('sidebarOverlay');
+
+        // 햄버거 버튼 클릭 시 사이드바와 오버레이 열기/닫기
+        menuBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+            overlay.classList.toggle('open');
+        });
+
+        // 열려있는 상태에서 어두운 배경(오버레이) 클릭 시 닫기
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('open');
+        });
+    </script>
 </body>
 </html>
