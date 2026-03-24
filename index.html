@@ -36,7 +36,6 @@
         .notification-icon-btn { background: none; border: none; cursor: pointer; padding: 8px; border-radius: 50%; }
         .user-avatar { width: 32px; height: 32px; border-radius: 50%; cursor: pointer; object-fit: cover; }
         
-        /* 모바일용 우측 상단 메뉴 아이콘 (기본은 숨김) */
         .menu-icon-mobile { display: none; cursor: pointer; background: none; border: none; padding: 8px; border-radius: 50%; }
 
         /* -------------------------
@@ -63,16 +62,17 @@
         .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 40px 16px; padding: 24px; }
         .video-card { display: flex; flex-direction: column; cursor: pointer; text-decoration: none; color: inherit; width: 100%; }
         
-        /* 🔥 썸네일 비율 고정 (움직임 방지) 🔥 */
+        /* PC 기본 썸네일 세팅 */
         .thumbnail-container { 
             position: relative; 
             width: 100%; 
-            aspect-ratio: 16 / 9; /* 최신 방식으로 16:9 완벽 고정 */
+            padding-top: 56.25%; /* 16:9 비율 유지 */
             border-radius: 12px; 
             overflow: hidden; 
             background-color: #e5e5e5; 
         }
         .thumbnail-img { 
+            position: absolute; top: 0; left: 0;
             width: 100%; 
             height: 100%; 
             object-fit: cover; 
@@ -87,34 +87,75 @@
         .channel-name, .video-meta { font-size: 14px; color: #606060; margin-bottom: 2px; }
         .video-meta span { color: #606060; }
 
-        /* 🔥 반응형 미디어 쿼리 (모바일 화면 설정) 🔥 */
+        /* 🔥 반응형 모바일 최적화 (핵심 업데이트 영역) 🔥 */
         @media (max-width: 768px) {
+            /* 1. 모바일 화면 자체의 스크롤을 완전히 잠가버립니다. */
+            html, body { 
+                height: 100vh; /* 브라우저 지원용 fallback */
+                height: 100dvh; /* 최신 모바일 브라우저 주소창 고려한 완벽한 100% 높이 */
+                overflow: hidden; 
+                touch-action: none; /* 화면 위아래 스와이프 차단 */
+            }
+
             .header-center { display: none; }
             .create-icon-btn, .notification-icon-btn { display: none; }
             .menu-icon { display: none; }
             .menu-icon-mobile { display: block; } 
             
-            /* 🔥 한 화면에 2개 영상 꽉 차게 들어오도록 여백/간격 축소 🔥 */
-            .main-content { margin-left: 0; padding-bottom: 20px; }
-            .category-chips { padding: 8px 12px; } /* 칩 여백 축소 */
-            .video-grid { 
-                grid-template-columns: 1fr; 
-                padding: 12px 16px; /* 좌우 여백 확보, 상하 여백 축소 */
-                gap: 20px; /* 영상과 영상 사이 간격 축소 */
+            /* 2. 메인 콘텐츠를 화면 높이에 정확히 맞춥니다. */
+            .main-content { 
+                margin-left: 0; 
+                height: 100dvh; 
+                display: flex; 
+                flex-direction: column; 
             }
-            .info-container { margin-top: 8px; } /* 썸네일과 텍스트 사이 간격 축소 */
-            .video-title { font-size: 15px; margin-bottom: 2px; } /* 제목 크기 미세 조정 */
+            .category-chips { padding: 8px 12px; flex-shrink: 0; } 
+            
+            /* 3. 비디오 그리드가 남은 공간을 정확히 반으로 나눠 갖도록 강제합니다. */
+            .video-grid { 
+                flex: 1; /* 남은 높이 모두 차지 */
+                display: flex; 
+                flex-direction: column;
+                justify-content: center; /* 중앙 정렬 */
+                padding: 10px 16px; 
+                gap: 12px; /* 간격 축소 */
+                overflow: hidden; /* 영역 밖으로 나가는 것 방지 */
+            }
+            .video-card {
+                flex: 1; /* 두 개의 카드가 1:1 비율로 공간 차지 */
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                max-height: calc(50% - 6px); /* 공간 초과 방지 */
+            }
 
-            /* 사이드바 우측 숨김 세팅 */
+            /* 4. 썸네일 크기가 화면 크기에 맞춰 자동으로 줄어들게 세팅 */
+            .thumbnail-container {
+                padding-top: 0; /* PC용 16:9 핵 제거 */
+                height: 100%; /* 부모 공간 내에서 최대로 */
+                max-height: 25dvh; /* 어떤 폰에서도 1/4 이상 커지지 않게 높이 상한선 설정 */
+                aspect-ratio: 16 / 9; /* 16:9 비율 완벽 고정 */
+                width: auto; 
+                max-width: 100%;
+                margin: 0 auto; /* 좌우 중앙 정렬 */
+                border-radius: 8px;
+            }
+            
+            /* 글씨 크기와 여백을 폰에 맞게 미세 조정 */
+            .info-container { margin-top: 8px; flex-shrink: 0; padding-bottom: 4px; }
+            .video-title { font-size: 13px; line-height: 1.3; } 
+            .channel-name, .video-meta { font-size: 11px; }
+
+            /* 사이드바 우측 숨김 */
             .sidebar { 
-                top: 0; left: auto; right: 0; height: 100vh; padding-top: 56px; 
+                top: 0; left: auto; right: 0; height: 100dvh; padding-top: 56px; 
                 transform: translateX(100%); transition: transform 0.3s ease-in-out; 
                 box-shadow: -2px 0 12px rgba(0,0,0,0.2);
             }
             .sidebar.open { transform: translateX(0); }
 
             .sidebar-overlay {
-                display: block; position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+                display: block; position: fixed; top: 0; left: 0; width: 100%; height: 100dvh;
                 background-color: rgba(0,0,0,0.5); z-index: 998;
                 opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
             }
