@@ -10,8 +10,9 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Roboto', 'Noto Sans KR', sans-serif; background-color: #fff; color: #0f0f0f; overflow-x: hidden; display: flex; }
 
-        /* 공통 아이콘 플레이스홀더 */
-        .icon { width: 24px; height: 24px; background-color: #ddd; border-radius: 4px; flex-shrink: 0; }
+        /* 🔥 SVG 아이콘 공통 스타일 🔥 */
+        .icon { width: 24px; height: 24px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+        .icon svg { width: 100%; height: 100%; fill: currentColor; }
 
         /* -------------------------
            상단 바 (Header) 
@@ -24,31 +25,27 @@
 
         /* 왼쪽 로고 영역 */
         .header-left { display: flex; align-items: center; gap: 16px; }
-        .menu-icon { margin-left: -4px; cursor: pointer; }
+        .menu-icon { margin-left: -4px; cursor: pointer; background: none; border: none; padding: 8px; border-radius: 50%; }
+        .menu-icon:hover { background-color: #f2f2f2; }
         .logo-container { display: flex; align-items: center; gap: 4px; text-decoration: none; color: inherit; }
-        
-        /* 🔥 빨간색 재생 버튼을 검은색으로 변경 🔥 */
         .logo-play-button { width: 30px; height: 20px; background-color: #0f0f0f; border-radius: 6px; display: flex; align-items: center; justify-content: center; }
         .logo-play-button::after { content: ""; border-top: 5px solid transparent; border-left: 10px solid #fff; border-bottom: 5px solid transparent; }
-        
-        /* 🔥 YOUTUBE를 MYTUBE로 변경 (Roboto 폰트 사용) 🔥 */
-        .logo-text { font-family: 'Roboto', sans-serif; font-size: 20px; font-weight: 700; color: #0f0f0f; }
+        .logo-text { font-family: 'Roboto', sans-serif; font-size: 20px; font-weight: 700; color: #0f0f0f; letter-spacing: -0.5px; }
 
         /* 중앙 검색창 영역 */
         .header-center { display: flex; align-items: center; gap: 8px; flex: 0 1 732px; }
         .search-form { display: flex; align-items: center; border: 1px solid #ccc; border-radius: 40px; overflow: hidden; height: 40px; flex: 1; }
         .search-input { border: none; padding: 0 16px; font-size: 16px; flex: 1; outline: none; }
-        .search-icon-btn { width: 64px; height: 100%; border: none; background-color: #f8f8f8; border-left: 1px solid #ccc; cursor: pointer; }
-        .search-icon-btn .icon { background-color: #606060; }
-        .mic-icon-btn { width: 40px; height: 40px; border: none; border-radius: 50%; background-color: #f2f2f2; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-        .mic-icon-btn .icon { background-color: #0f0f0f; }
+        .search-icon-btn { width: 64px; height: 100%; border: none; background-color: #f8f8f8; border-left: 1px solid #ccc; cursor: pointer; color: #0f0f0f; }
+        .mic-icon-btn { width: 40px; height: 40px; border: none; border-radius: 50%; background-color: #f2f2f2; cursor: pointer; display: flex; align-items: center; justify-content: center; color: #0f0f0f; }
+        .mic-icon-btn:hover { background-color: #e5e5e5; }
 
         /* 오른쪽 사용자 메뉴 영역 */
         .header-right { display: flex; align-items: center; gap: 12px; }
-        .create-icon-btn { display: flex; align-items: center; gap: 8px; border: 1px solid #ccc; border-radius: 20px; padding: 6px 14px; background: none; cursor: pointer; font-size: 14px; font-weight: 500; }
-        .create-icon-btn .icon { background-color: #0f0f0f; }
-        .notification-icon-btn { background: none; border: none; cursor: pointer; }
-        .notification-icon-btn .icon { background-color: #0f0f0f; }
+        .create-icon-btn { display: flex; align-items: center; gap: 8px; border: 1px solid #ccc; border-radius: 20px; padding: 6px 14px; background: none; cursor: pointer; font-size: 14px; font-weight: 500; background-color: #f2f2f2;}
+        .create-icon-btn:hover { background-color: #e5e5e5; }
+        .notification-icon-btn { background: none; border: none; cursor: pointer; padding: 8px; border-radius: 50%; }
+        .notification-icon-btn:hover { background-color: #f2f2f2; }
         .user-avatar { width: 32px; height: 32px; border-radius: 50%; background-color: #ff9800; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; font-weight: 700; cursor: pointer; }
 
         /* -------------------------
@@ -60,124 +57,85 @@
             overflow-y: auto; z-index: 999; border-right: 1px solid #e5e5e5;
         }
 
-        /* 🔥 홈, 쇼츠, 구독, 나 항목 삽입 🔥 */
         .sidebar-item {
             display: flex; align-items: center; gap: 24px; padding: 10px 12px;
             cursor: pointer; border-radius: 10px; text-decoration: none; color: inherit; margin-bottom: 2px;
         }
         .sidebar-item:hover { background-color: #f2f2f2; }
         .sidebar-item.active { background-color: #f2f2f2; font-weight: 500; }
-        .sidebar-item .icon { width: 20px; height: 20px; background-color: #0f0f0f; }
         .sidebar-text { font-size: 14px; color: #0f0f0f; }
         
-        /* 아바타 아이콘 스타일 */
         .sidebar-avatar { width: 24px; height: 24px; border-radius: 50%; background-color: #ff9800; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 700; margin-left: -2px; }
 
         /* -------------------------
            메인 콘텐츠 (Main Content) 
         -------------------------- */
-        .main-content {
-            margin-left: 240px; padding-top: 56px; flex: 1; min-height: 100vh;
-            background-color: #fafafa;
-        }
+        .main-content { margin-left: 240px; padding-top: 56px; flex: 1; min-height: 100vh; background-color: #fff; }
 
-        /* 상단 카테고리 필터 (Chips) */
-        .category-chips {
-            display: flex; gap: 12px; padding: 12px 24px;
-            overflow-x: auto; white-space: nowrap;
-            background-color: #fff; border-bottom: 1px solid #e5e5e5; position: sticky; top: 56px; z-index: 998;
-        }
-        .chip {
-            background-color: rgba(0,0,0,0.05); border: none; padding: 8px 12px;
-            border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; color: #0f0f0f;
-        }
+        .category-chips { display: flex; gap: 12px; padding: 12px 24px; overflow-x: auto; white-space: nowrap; background-color: #fff; position: sticky; top: 56px; z-index: 998; }
+        .chip { background-color: rgba(0,0,0,0.05); border: none; padding: 8px 12px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; color: #0f0f0f; }
         .chip.active { background-color: #0f0f0f; color: #fff; }
 
-        /* 비디오 그리드 컨테이너 */
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-            gap: 20px 16px; padding: 24px;
-        }
-
-        /* 개별 비디오 카드 */
+        .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 40px 16px; padding: 24px; }
         .video-card { display: flex; flex-direction: column; cursor: pointer; text-decoration: none; color: inherit; }
         
-        /* 썸네일 영역 */
-        .thumbnail-container {
-            position: relative; width: 100%; padding-top: 56.25%; /* 16:9 비율 유지 */
-            border-radius: 12px; overflow: hidden; background-color: #e5e5e5;
-        }
-        .thumbnail-img {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;
-        }
-        /* 시간 뱃지 "1:00" */
-        .duration-badge {
-            position: absolute; bottom: 8px; right: 8px;
-            background-color: rgba(0, 0, 0, 0.8); color: #fff;
-            padding: 3px 4px; border-radius: 4px; font-size: 12px; font-weight: 500;
-        }
+        .thumbnail-container { position: relative; width: 100%; padding-top: 56.25%; border-radius: 12px; overflow: hidden; background-color: #e5e5e5; }
+        .thumbnail-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+        .duration-badge { position: absolute; bottom: 8px; right: 8px; background-color: rgba(0, 0, 0, 0.8); color: #fff; padding: 3px 4px; border-radius: 4px; font-size: 12px; font-weight: 500; }
 
-        /* 하단 정보 영역 */
         .info-container { display: flex; margin-top: 12px; gap: 12px; }
-        
-        /* 채널 아바타 플레이스홀더 */
-        .channel-avatar {
-            width: 36px; height: 36px; border-radius: 50%;
-            background-color: #ddd; flex-shrink: 0; object-fit: cover;
-        }
-        
+        .channel-avatar { width: 36px; height: 36px; border-radius: 50%; background-color: #ddd; flex-shrink: 0; object-fit: cover; }
         .text-info { flex-grow: 1; overflow: hidden; }
-        
-        /* 제목: "성수동 브이로그..." */
-        .video-title {
-            font-size: 16px; font-weight: 600; line-height: 1.4; color: #0f0f0f;
-            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
-            margin-bottom: 4px;
-        }
-        
-        /* 채널 이름, 조회수 메타데이터 */
+        .video-title { font-size: 16px; font-weight: 600; line-height: 1.4; color: #0f0f0f; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 4px; }
         .channel-name, .video-meta { font-size: 14px; color: #606060; margin-bottom: 2px; }
         .video-meta span { color: #606060; }
-        .sponsor-tag { font-weight: 700; color: #0f0f0f; }
-
     </style>
 </head>
 <body>
 
     <header class="header">
         <div class="header-left">
-            <button class="menu-icon mic-icon-btn"><div class="icon"></div></button>
+            <button class="menu-icon">
+                <div class="icon"><svg viewBox="0 0 24 24"><path d="M21 6H3V5h18v1zm0 5H3v1h18v-1zm0 6H3v1h18v-1z"></path></svg></div>
+            </button>
             <a href="#" class="logo-container">
                 <div class="logo-play-button"></div>
                 <span class="logo-text">MYTUBE</span>
-            </div>
+            </a>
         </div>
         <div class="header-center">
             <form class="search-form">
                 <input type="text" placeholder="검색" class="search-input">
-                <button type="submit" class="search-icon-btn"><div class="icon"></div></button>
+                <button type="submit" class="search-icon-btn">
+                    <div class="icon" style="width: 20px; height: 20px; margin: 0 auto;"><svg viewBox="0 0 24 24"><path d="M20.87 20.17l-5.59-5.59C16.35 13.35 17 11.75 17 10c0-3.87-3.13-7-7-7s-7 3.13-7 7 3.13 7 7 7c1.75 0 3.35-.65 4.58-1.71l5.59 5.59.7-.71zM10 16c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"></path></svg></div>
+                </button>
             </form>
-            <button class="mic-icon-btn"><div class="icon"></div></button>
+            <button class="mic-icon-btn">
+                <div class="icon" style="width: 20px; height: 20px;"><svg viewBox="0 0 24 24"><path d="M12 3c-1.66 0-3 1.37-3 3.07v5.86c0 1.7 1.34 3.07 3 3.07s3-1.37 3-3.07V6.07C15 4.37 13.66 3 12 3zm6.5 9h-1c0 3.03-2.47 5.5-5.5 5.5S6.5 15.03 6.5 12h-1c0 3.24 2.39 5.93 5.5 6.41V21h2v-2.59c3.11-.48 5.5-3.17 5.5-6.41z"></path></svg></div>
+            </button>
         </div>
         <div class="header-right">
-            <button class="create-icon-btn"><div class="icon"></div>만들기</button>
-            <button class="notification-icon-btn"><div class="icon"></div></button>
+            <button class="create-icon-btn">
+                <div class="icon" style="width: 20px; height: 20px;"><svg viewBox="0 0 24 24"><path d="M14 13h-3v3H9v-3H6v-2h3V8h2v3h3v2zm3-7H3v12h14v-6.39l4 1.83V8.56l-4 1.83V6m1-1v3.83L22 7v8l-4-1.83V19H2V5h16z"></path></svg></div>만들기
+            </button>
+            <button class="notification-icon-btn">
+                <div class="icon"><svg viewBox="0 0 24 24"><path d="M10 20h4c0 1.1-.9 2-2 2s-2-.9-2-2zm10-2.65V19H4v-1.65l2-1.88v-5.15C6 7.4 7.56 5.1 10 4.34v-.38c0-1.42 1.49-2.5 2.99-1.76.65.32 1.01 1.03 1.01 1.76v.39c2.44.75 4 3.06 4 5.98v5.15l2 1.87zm-1 .42-2-1.88v-5.15c0-2.4-1.26-4.23-3.21-4.94-.36-.13-.75-.26-1.14-.36C10.51 5.07 9 6.27 9 7.8v9.06l-2 1.88v.41h12v-.4z"></path></svg></div>
+            </button>
             <div class="user-avatar">JM</div>
         </div>
     </header>
 
     <nav class="sidebar">
         <a href="#" class="sidebar-item active">
-            <div class="icon"></div>
+            <div class="icon"><svg viewBox="0 0 24 24"><path d="M4 21V10.08l8-6.96 8 6.96V21h-6v-6h-4v6H4z"></path></svg></div>
             <span class="sidebar-text">홈</span>
         </a>
         <a href="#" class="sidebar-item">
-            <div class="icon"></div>
+            <div class="icon"><svg viewBox="0 0 24 24"><path d="M10 14.65v-5.3L15 12l-5 2.65zm7.77-4.33-1.2-.5L18 9.06c1.84-.96 2.53-3.23 1.56-5.06s-3.24-2.53-5.07-1.56L6 6.94c-1.29.68-2.07 2.04-2 3.49.06 1.42.94 2.66 2.23 3.14l1.2.5L6 14.94c-1.84.96-2.53 3.23-1.56 5.06s3.24 2.53 5.07 1.56l8.5-4.5c1.29-.68 2.06-2.04 2-3.49-.06-1.42-.94-2.66-2.23-3.14z"></path></svg></div>
             <span class="sidebar-text">쇼츠</span>
         </a>
         <a href="#" class="sidebar-item">
-            <div class="icon"></div>
+            <div class="icon"><svg viewBox="0 0 24 24"><path d="M10 18v-6l5 3-5 3zm7-15H7v1h10V3zm3 3H4v1h16V6zm2 3H2v12h20V9zM3 10h18v10H3V10z"></path></svg></div>
             <span class="sidebar-text">구독</span>
         </a>
         <a href="#" class="sidebar-item">
@@ -197,7 +155,6 @@
         </div>
 
         <div class="video-grid">
-
             <a href="#" class="video-card">
                 <div class="thumbnail-container">
                     <img src="./images/image_1.png" alt="성수동 브이로그 (낮)" class="thumbnail-img">
@@ -211,7 +168,7 @@
                         <div class="video-meta">조회수 240회 <span>•</span> 1주 전</div>
                     </div>
                 </div>
-            </div>
+            </a>
 
             <a href="#" class="video-card">
                 <div class="thumbnail-container">
@@ -226,8 +183,7 @@
                         <div class="video-meta">조회수 240회 <span>•</span> 1주 전</div>
                     </div>
                 </div>
-            </div>
-
+            </a>
         </div>
     </main>
 
