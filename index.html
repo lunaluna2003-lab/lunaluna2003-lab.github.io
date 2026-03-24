@@ -1,12 +1,112 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>나의 VWO 실험 페이지</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>성수동 브이로그 A/B 테스트 페이지</title>
+    <style>
+        /* 기본 스타일 리셋 */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Roboto', 'Noto Sans KR', sans-serif; background-color: #fff; color: #0f0f0f; }
+
+        /* 상단 카테고리 필터 (전체, 성수동 핫플 등) */
+        .category-chips {
+            display: flex; gap: 12px; padding: 12px 24px;
+            overflow-x: auto; white-space: nowrap;
+            border-bottom: 1px solid #e5e5e5;
+        }
+        .chip {
+            background-color: #f2f2f2; border: none; padding: 8px 12px;
+            border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer;
+        }
+        .chip.active { background-color: #0f0f0f; color: #fff; }
+
+        /* 비디오 그리드 컨테이너 */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 20px 16px; padding: 24px;
+        }
+
+        /* 개별 비디오 카드 */
+        .video-card { display: flex; flex-direction: column; cursor: pointer; text-decoration: none; color: inherit; }
+        
+        /* 썸네일 영역 */
+        .thumbnail-container {
+            position: relative; width: 100%; padding-top: 56.25%; /* 16:9 비율 유지 */
+            border-radius: 12px; overflow: hidden; background-color: #e5e5e5;
+        }
+        .thumbnail-img {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;
+        }
+        .duration-badge {
+            position: absolute; bottom: 8px; right: 8px;
+            background-color: rgba(0, 0, 0, 0.8); color: #fff;
+            padding: 3px 4px; border-radius: 4px; font-size: 12px; font-weight: 500;
+        }
+
+        /* 하단 정보 영역 */
+        .info-container { display: flex; margin-top: 12px; gap: 12px; }
+        
+        .channel-avatar {
+            width: 36px; height: 36px; border-radius: 50%;
+            background-color: #ddd; flex-shrink: 0; object-fit: cover;
+        }
+        
+        .text-info { flex-grow: 1; overflow: hidden; }
+        .video-title {
+            font-size: 16px; font-weight: 600; line-height: 1.4;
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+            margin-bottom: 4px;
+        }
+        .channel-name, .video-meta { font-size: 14px; color: #606060; margin-bottom: 2px; }
+        .sponsor-tag { font-weight: 700; color: #0f0f0f; }
+
+    </style>
 </head>
 <body>
-<h1>안녕하세요! VWO 실험 중입니다.</h1>
-<p>이 버튼의 색상을 바꾸는 A/B 테스트를 진행할 예정입니다.</p>
-<button id="test-button">구매하기</button>
+
+    <div class="category-chips">
+        <button class="chip active">전체</button>
+        <button class="chip">성수동 핫플</button>
+        <button class="chip">서울 브이로그</button>
+        <button class="chip">맛집 투어</button>
+        <button class="chip">데이트 코스</button>
+    </div>
+
+    <div class="video-grid">
+
+        <a href="#" class="video-card">
+            <div class="thumbnail-container">
+                <img src="./images/image_1.png" alt="성수동 브이로그 (낮)" class="thumbnail-img">
+                <span class="duration-badge">1:00</span>
+            </div>
+            <div class="info-container">
+                <img src="https://via.placeholder.com/36" alt="채널 아바타" class="channel-avatar">
+                <div class="text-info">
+                    <h3 class="video-title">성수동 브이로그 요즘 핫플 정복!🔥 디올부터 하우스 노웨어까지✨</h3>
+                    <div class="channel-name">성수 힙스터</div>
+                    <div class="video-meta">조회수 240회 • 1주 전</div>
+                </div>
+            </div>
+        </a>
+
+        <a href="#" class="video-card">
+            <div class="thumbnail-container">
+                <img src="./images/image_2.png" alt="성수동 브이로그 (저녁)" class="thumbnail-img">
+                <span class="duration-badge">1:00</span>
+            </div>
+            <div class="info-container">
+                <img src="https://via.placeholder.com/36" alt="채널 아바타" class="channel-avatar">
+                <div class="text-info">
+                    <h3 class="video-title">성수동 브이로그 요즘 핫플 정복!🔥 디올부터 하우스 노웨어까지✨</h3>
+                    <div class="channel-name">성수 힙스터</div>
+                    <div class="video-meta">조회수 240회 • 1주 전</div>
+                </div>
+            </div>
+        </a>
+
+    </div>
+
 </body>
 </html>
