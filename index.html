@@ -35,6 +35,9 @@
         .create-icon-btn { display: flex; align-items: center; gap: 8px; border: 1px solid #ccc; border-radius: 20px; padding: 6px 14px; background: none; cursor: pointer; font-size: 14px; font-weight: 500; background-color: #f2f2f2;}
         .notification-icon-btn { background: none; border: none; cursor: pointer; padding: 8px; border-radius: 50%; }
         .user-avatar { width: 32px; height: 32px; border-radius: 50%; cursor: pointer; object-fit: cover; }
+        
+        /* 모바일용 우측 상단 메뉴 아이콘 (기본은 숨김) */
+        .menu-icon-mobile { display: none; cursor: pointer; background: none; border: none; padding: 8px; border-radius: 50%; }
 
         /* -------------------------
            사이드바 및 오버레이 (목록 바)
@@ -47,9 +50,6 @@
         .sidebar-item.active { background-color: #f2f2f2; font-weight: 500; }
         .sidebar-text { font-size: 14px; color: #0f0f0f; }
         .sidebar-avatar { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; margin-left: -2px; }
-
-        /* 하단 네비게이션 바 (모바일 전용) - 기본 숨김 */
-        .bottom-nav { display: none; }
 
         /* -------------------------
            메인 콘텐츠
@@ -75,33 +75,35 @@
 
         /* 🔥 반응형 미디어 쿼리 (모바일 화면 설정) 🔥 */
         @media (max-width: 768px) {
-            /* 헤더 간소화 */
+            /* 상단 바 좌우 버튼 교체 및 간소화 */
             .header-center { display: none; }
-            .create-icon-btn { display: none; }
-            .header { padding: 0 16px; }
-            .menu-icon { display: block; } /* 햄버거 메뉴 보이기 */
+            .create-icon-btn, .notification-icon-btn { display: none; }
+            .menu-icon { display: none; } /* PC용 좌측 햄버거 숨김 */
+            .menu-icon-mobile { display: block; } /* 🔥 모바일용 우측 햄버거 보임 🔥 */
             
             /* 메인 콘텐츠 여백 조정 */
-            .main-content { margin-left: 0; padding-bottom: 60px; }
+            .main-content { margin-left: 0; padding-bottom: 20px; }
             .video-grid { grid-template-columns: 1fr; padding: 0; gap: 24px; }
             .thumbnail-container { border-radius: 0; }
             .info-container { padding: 0 12px; }
             .category-chips { padding: 12px; }
 
-            /* 🔥 사이드바(목록 바) 기본 숨김 처리 및 애니메이션 추가 🔥 */
+            /* 🔥 사이드바를 우측으로 이동시키고 기본적으로 숨김 🔥 */
             .sidebar { 
                 top: 0; 
+                left: auto;
+                right: 0; /* 우측에 붙임 */
                 height: 100vh; 
                 padding-top: 56px; 
-                transform: translateX(-100%); /* 왼쪽 화면 밖으로 100% 밀어내어 기본적으로 접어둠 */
-                transition: transform 0.3s ease-in-out; /* 부드럽게 열리는 효과 */
-                box-shadow: 2px 0 12px rgba(0,0,0,0.2);
+                transform: translateX(100%); /* 오른쪽 화면 밖으로 완전히 밀어내어 숨김 */
+                transition: transform 0.3s ease-in-out; 
+                box-shadow: -2px 0 12px rgba(0,0,0,0.2);
             }
             .sidebar.open {
-                transform: translateX(0); /* .open 클래스가 붙으면 화면 안으로 스르륵 들어옴 */
+                transform: translateX(0); /* 버튼 누르면 오른쪽에서 스르륵 나타남 */
             }
 
-            /* 목록 바가 열렸을 때 뒷배경을 어둡게 해주는 오버레이 */
+            /* 목록 바 열렸을 때 뒷배경 오버레이 */
             .sidebar-overlay {
                 display: block; position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
                 background-color: rgba(0,0,0,0.5); z-index: 998;
@@ -110,17 +112,6 @@
             .sidebar-overlay.open {
                 opacity: 1; pointer-events: auto;
             }
-
-            /* 하단 네비게이션 바 표시 */
-            .bottom-nav { 
-                display: flex; position: fixed; bottom: 0; left: 0; width: 100%; height: 50px; 
-                background-color: #fff; border-top: 1px solid #e5e5e5; z-index: 900; 
-                justify-content: space-around; align-items: center; padding: 0 8px;
-            }
-            .bottom-nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #0f0f0f; width: 20%; }
-            .bottom-nav-item .icon { width: 24px; height: 24px; }
-            .bottom-nav-text { font-size: 10px; }
-            .bottom-nav-avatar { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; }
         }
     </style>
 </head>
@@ -128,7 +119,7 @@
 
     <header class="header">
         <div class="header-left">
-            <button class="menu-icon" id="menuToggleBtn">
+            <button class="menu-icon" id="menuToggleBtnPC">
                 <div class="icon"><svg viewBox="0 0 24 24"><path d="M21 6H3V5h18v1zm0 5H3v1h18v-1zm0 6H3v1h18v-1z"></path></svg></div>
             </button>
             <a href="#" class="logo-container">
@@ -147,6 +138,10 @@
             <button class="create-icon-btn"><div class="icon" style="width: 20px; height: 20px;"><svg viewBox="0 0 24 24"><path d="M14 13h-3v3H9v-3H6v-2h3V8h2v3h3v2zm3-7H3v12h14v-6.39l4 1.83V8.56l-4 1.83V6m1-1v3.83L22 7v8l-4-1.83V19H2V5h16z"></path></svg></div>만들기</button>
             <button class="notification-icon-btn"><div class="icon"><svg viewBox="0 0 24 24"><path d="M10 20h4c0 1.1-.9 2-2 2s-2-.9-2-2zm10-2.65V19H4v-1.65l2-1.88v-5.15C6 7.4 7.56 5.1 10 4.34v-.38c0-1.42 1.49-2.5 2.99-1.76.65.32 1.01 1.03 1.01 1.76v.39c2.44.75 4 3.06 4 5.98v5.15l2 1.87zm-1 .42-2-1.88v-5.15c0-2.4-1.26-4.23-3.21-4.94-.36-.13-.75-.26-1.14-.36C10.51 5.07 9 6.27 9 7.8v9.06l-2 1.88v.41h12v-.4z"></path></svg></div></button>
             <img src="./image_3.png" alt="A조 프로필" class="user-avatar">
+            
+            <button class="menu-icon-mobile" id="menuToggleBtnMobile">
+                <div class="icon"><svg viewBox="0 0 24 24"><path d="M21 6H3V5h18v1zm0 5H3v1h18v-1zm0 6H3v1h18v-1z"></path></svg></div>
+            </button>
         </div>
     </header>
 
@@ -168,25 +163,6 @@
         <a href="#" class="sidebar-item">
             <img src="./image_3.png" alt="A조 프로필" class="sidebar-avatar">
             <span class="sidebar-text">나</span>
-        </a>
-    </nav>
-
-    <nav class="bottom-nav">
-        <a href="#" class="bottom-nav-item">
-            <div class="icon"><svg viewBox="0 0 24 24"><path d="M4 21V10.08l8-6.96 8 6.96V21h-6v-6h-4v6H4z"></path></svg></div>
-            <span class="bottom-nav-text">홈</span>
-        </a>
-        <a href="#" class="bottom-nav-item">
-            <div class="icon"><svg viewBox="0 0 24 24"><path d="M10 14.65v-5.3L15 12l-5 2.65zm7.77-4.33-1.2-.5L18 9.06c1.84-.96 2.53-3.23 1.56-5.06s-3.24-2.53-5.07-1.56L6 6.94c-1.29.68-2.07 2.04-2 3.49.06 1.42.94 2.66 2.23 3.14l1.2.5L6 14.94c-1.84.96-2.53 3.23-1.56 5.06s3.24 2.53 5.07 1.56l8.5-4.5c1.29-.68 2.06-2.04 2-3.49-.06-1.42-.94-2.66-2.23-3.14z"></path></svg></div>
-            <span class="bottom-nav-text">Shorts</span>
-        </a>
-        <a href="#" class="bottom-nav-item">
-            <div class="icon"><svg viewBox="0 0 24 24"><path d="M10 18v-6l5 3-5 3zm7-15H7v1h10V3zm3 3H4v1h16V6zm2 3H2v12h20V9zM3 10h18v10H3V10z"></path></svg></div>
-            <span class="bottom-nav-text">구독</span>
-        </a>
-        <a href="#" class="bottom-nav-item">
-            <img src="./image_3.png" alt="A조 프로필" class="bottom-nav-avatar">
-            <span class="bottom-nav-text">나</span>
         </a>
     </nav>
 
@@ -234,17 +210,22 @@
     </main>
 
     <script>
-        const menuBtn = document.getElementById('menuToggleBtn');
+        const menuBtnPC = document.getElementById('menuToggleBtnPC');
+        const menuBtnMobile = document.getElementById('menuToggleBtnMobile');
         const sidebar = document.getElementById('sidebarMenu');
         const overlay = document.getElementById('sidebarOverlay');
 
-        // 햄버거 버튼 클릭 시 사이드바와 오버레이 열기/닫기
-        menuBtn.addEventListener('click', () => {
+        // 사이드바 토글 함수
+        function toggleSidebar() {
             sidebar.classList.toggle('open');
             overlay.classList.toggle('open');
-        });
+        }
 
-        // 열려있는 상태에서 어두운 배경(오버레이) 클릭 시 닫기
+        // PC와 모바일 버튼에 각각 클릭 이벤트 연결
+        if (menuBtnPC) menuBtnPC.addEventListener('click', toggleSidebar);
+        if (menuBtnMobile) menuBtnMobile.addEventListener('click', toggleSidebar);
+
+        // 어두운 배경 클릭 시 닫기
         overlay.addEventListener('click', () => {
             sidebar.classList.remove('open');
             overlay.classList.remove('open');
