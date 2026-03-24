@@ -46,7 +46,9 @@
         .create-icon-btn:hover { background-color: #e5e5e5; }
         .notification-icon-btn { background: none; border: none; cursor: pointer; padding: 8px; border-radius: 50%; }
         .notification-icon-btn:hover { background-color: #f2f2f2; }
-        .user-avatar { width: 32px; height: 32px; border-radius: 50%; background-color: #ff9800; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 14px; font-weight: 700; cursor: pointer; }
+        
+        /* 🔥 우측 상단 프로필: 이미지 기반으로 변경 🔥 */
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; cursor: pointer; object-fit: cover; }
 
         /* -------------------------
            왼쪽 사이드바 (Navigation) 
@@ -65,7 +67,8 @@
         .sidebar-item.active { background-color: #f2f2f2; font-weight: 500; }
         .sidebar-text { font-size: 14px; color: #0f0f0f; }
         
-        .sidebar-avatar { width: 24px; height: 24px; border-radius: 50%; background-color: #ff9800; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 700; margin-left: -2px; }
+        /* 🔥 왼쪽 사이드바 프로필: 이미지 기반으로 변경 🔥 */
+        .sidebar-avatar { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; margin-left: -2px; }
 
         /* -------------------------
            메인 콘텐츠 (Main Content) 
@@ -84,7 +87,10 @@
         .duration-badge { position: absolute; bottom: 8px; right: 8px; background-color: rgba(0, 0, 0, 0.8); color: #fff; padding: 3px 4px; border-radius: 4px; font-size: 12px; font-weight: 500; }
 
         .info-container { display: flex; margin-top: 12px; gap: 12px; }
-        .channel-avatar { width: 36px; height: 36px; border-radius: 50%; background-color: #ddd; flex-shrink: 0; object-fit: cover; }
+        
+        /* 비디오 채널 아바타: 이미지 기반으로 변경 및 배경색 제거 */
+        .channel-avatar { width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; object-fit: cover; }
+        
         .text-info { flex-grow: 1; overflow: hidden; }
         .video-title { font-size: 16px; font-weight: 600; line-height: 1.4; color: #0f0f0f; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 4px; }
         .channel-name, .video-meta { font-size: 14px; color: #606060; margin-bottom: 2px; }
@@ -121,7 +127,7 @@
             <button class="notification-icon-btn">
                 <div class="icon"><svg viewBox="0 0 24 24"><path d="M10 20h4c0 1.1-.9 2-2 2s-2-.9-2-2zm10-2.65V19H4v-1.65l2-1.88v-5.15C6 7.4 7.56 5.1 10 4.34v-.38c0-1.42 1.49-2.5 2.99-1.76.65.32 1.01 1.03 1.01 1.76v.39c2.44.75 4 3.06 4 5.98v5.15l2 1.87zm-1 .42-2-1.88v-5.15c0-2.4-1.26-4.23-3.21-4.94-.36-.13-.75-.26-1.14-.36C10.51 5.07 9 6.27 9 7.8v9.06l-2 1.88v.41h12v-.4z"></path></svg></div>
             </button>
-            <div class="user-avatar">JM</div>
+            <img src="./image_3.png" alt="A조 프로필" class="user-avatar">
         </div>
     </header>
 
@@ -139,7 +145,7 @@
             <span class="sidebar-text">구독</span>
         </a>
         <a href="#" class="sidebar-item">
-            <div class="sidebar-avatar">JM</div>
+            <img src="./image_3.png" alt="A조 프로필" class="sidebar-avatar">
             <span class="sidebar-text">나</span>
         </a>
     </nav>
@@ -161,10 +167,10 @@
                     <span class="duration-badge">1:00</span>
                 </div>
                 <div class="info-container">
-                    <img src="https://via.placeholder.com/36" alt="채널 아바타" class="channel-avatar">
+                    <img src="./image_3.png" alt="A조 프로필" class="channel-avatar">
                     <div class="text-info">
                         <h3 class="video-title">성수동 브이로그 요즘 핫플 정복!🔥 디올부터 하우스 노웨어까지✨</h3>
-                        <div class="channel-name">성수 힙스터</div>
+                        <div class="channel-name">E-비즈니스와 웹 애널리틱스_ A조</div>
                         <div class="video-meta">조회수 240회 <span>•</span> 1주 전</div>
                     </div>
                 </div>
@@ -176,10 +182,10 @@
                     <span class="duration-badge">1:00</span>
                 </div>
                 <div class="info-container">
-                    <img src="https://via.placeholder.com/36" alt="채널 아바타" class="channel-avatar">
+                    <img src="./image_3.png" alt="A조 프로필" class="channel-avatar">
                     <div class="text-info">
                         <h3 class="video-title">성수동 브이로그 요즘 핫플 정복!🔥 디올부터 하우스 노웨어까지✨</h3>
-                        <div class="channel-name">성수 힙스터</div>
+                        <div class="channel-name">E-비즈니스와 웹 애널리틱스_ A조</div>
                         <div class="video-meta">조회수 240회 <span>•</span> 1주 전</div>
                     </div>
                 </div>
