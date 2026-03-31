@@ -7,71 +7,89 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     
     <style>
-        /* [1] 랜딩 페이지 스타일 (검정 바탕) */
+        /* [1] 랜딩 페이지 스타일 (업로드 이미지 배경 + 그라데이션) */
         #landing-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background-color: #000; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            /* 배경 이미지 설정 */
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('./image_13717c.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
             z-index: 10000; color: #fff; text-align: center; padding: 20px;
             transition: opacity 0.5s ease;
         }
-        .landing-img { width: 250px; height: auto; margin-bottom: 30px; display: block; }
-        .landing-msg { font-family: 'Noto Sans KR', sans-serif; font-size: 18px; line-height: 1.8; max-width: 600px; margin-bottom: 40px; font-weight: 400; color: #ffffff; }
-        .btn-start { background-color: #00a2ff; color: #fff; border: none; padding: 16px 60px; font-size: 18px; font-weight: 700; border-radius: 50px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,162,255,0.4); transition: transform 0.2s, background-color 0.2s; }
-        .btn-start:hover { transform: scale(1.05); background-color: #008be2; }
+        .landing-img { width: 250px; height: auto; margin-bottom: 30px; display: block; filter: drop-shadow(0 0 10px rgba(0,0,0,0.5)); }
+        .landing-msg { 
+            font-family: 'Noto Sans KR', sans-serif; font-size: 20px; line-height: 1.8; 
+            max-width: 700px; margin-bottom: 40px; font-weight: 500; color: #ffffff;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.8); /* 가독성을 위한 그림자 */
+        }
+        .btn-start { 
+            background-color: #00a2ff; color: #fff; border: none; padding: 18px 70px; 
+            font-size: 20px; font-weight: 700; border-radius: 50px; cursor: pointer; 
+            box-shadow: 0 4px 20px rgba(0,162,255,0.5); transition: all 0.3s ease; 
+        }
+        .btn-start:hover { transform: scale(1.1); background-color: #008be2; box-shadow: 0 6px 25px rgba(0,162,255,0.7); }
 
-        /* [2] 유튜브 스타일 리셋 (처음 주신 코드 그대로 유지) */
+        /* [2] 유튜브 메인 스타일 (디자인 요소 완벽 복구) */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Roboto', 'Noto Sans KR', sans-serif; background-color: #fff; color: #0f0f0f; overflow-x: hidden; }
 
-        .app-container { display: none; width: 100%; } /* 무작위 노출을 위해 기본 none */
+        .app-container { display: none; width: 100%; min-height: 100vh; }
         .icon { width: 24px; height: 24px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
         .icon svg { width: 100%; height: 100%; fill: currentColor; }
 
-        /* 상단 바 (Header) */
+        /* Header */
         .header { position: fixed; top: 0; left: 0; width: 100%; height: 56px; background-color: #fff; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; border-bottom: 1px solid #e5e5e5; z-index: 1000; }
         .header-left { display: flex; align-items: center; gap: 16px; }
-        .menu-icon { margin-left: -4px; cursor: pointer; background: none; border: none; padding: 8px; border-radius: 50%; }
+        .menu-icon { cursor: pointer; background: none; border: none; padding: 8px; border-radius: 50%; display: flex; }
+        .menu-icon:hover { background-color: #f2f2f2; }
         .logo-container { display: flex; align-items: center; gap: 4px; text-decoration: none; color: inherit; }
-        .logo-play-button { width: 30px; height: 20px; background-color: #0f0f0f; border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+        .logo-play-button { width: 30px; height: 20px; background-color: #ff0000; border-radius: 6px; display: flex; align-items: center; justify-content: center; }
         .logo-play-button::after { content: ""; border-top: 5px solid transparent; border-left: 10px solid #fff; border-bottom: 5px solid transparent; }
-        .logo-text { font-family: 'Roboto', sans-serif; font-size: 20px; font-weight: 700; color: #0f0f0f; letter-spacing: -0.5px; }
+        .logo-text { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; }
 
         .header-center { display: flex; align-items: center; gap: 8px; flex: 0 1 732px; justify-content: center; }
-        .search-form { display: flex; align-items: center; border: 1px solid #ccc; border-radius: 40px; overflow: hidden; height: 40px; flex: 1; max-width: 600px; }
+        .search-form { display: flex; align-items: center; border: 1px solid #ccc; border-radius: 40px; overflow: hidden; height: 40px; flex: 1; max-width: 600px; margin-left: 32px; }
         .search-input { border: none; padding: 0 16px; font-size: 16px; flex: 1; outline: none; }
-        .search-icon-btn { width: 64px; height: 100%; border: none; background-color: #f8f8f8; border-left: 1px solid #ccc; cursor: pointer; color: #0f0f0f; }
+        .search-icon-btn { width: 64px; height: 100%; border: none; background-color: #f8f8f8; border-left: 1px solid #ccc; cursor: pointer; }
 
         .header-right { display: flex; align-items: center; gap: 12px; }
-        .create-icon-btn { display: flex; align-items: center; gap: 8px; border: 1px solid #ccc; border-radius: 20px; padding: 6px 14px; background: none; cursor: pointer; font-size: 14px; font-weight: 500; background-color: #f2f2f2;}
-        .user-avatar { width: 32px; height: 32px; border-radius: 50%; cursor: pointer; object-fit: cover; }
+        .create-btn { display: flex; align-items: center; gap: 8px; border: none; padding: 8px 12px; border-radius: 20px; background-color: #f2f2f2; font-weight: 500; cursor: pointer; }
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
 
-        /* 사이드바 */
-        .sidebar { position: fixed; top: 56px; left: 0; width: 240px; height: calc(100vh - 56px); background-color: #fff; display: flex; flex-direction: column; padding: 12px 12px 0; overflow-y: auto; z-index: 999; border-right: 1px solid #e5e5e5; }
-        .sidebar-item { display: flex; align-items: center; gap: 24px; padding: 10px 12px; cursor: pointer; border-radius: 10px; text-decoration: none; color: inherit; margin-bottom: 2px; }
-        .sidebar-item.active { background-color: #f2f2f2; font-weight: 500; }
-        .sidebar-text { font-size: 14px; color: #0f0f0f; }
+        /* Sidebar */
+        .sidebar { position: fixed; top: 56px; left: 0; width: 240px; height: calc(100vh - 56px); background-color: #fff; padding: 12px; border-right: 1px solid #e5e5e5; transition: transform 0.3s ease; z-index: 999; }
+        .sidebar-item { display: flex; align-items: center; gap: 24px; padding: 10px 12px; border-radius: 10px; text-decoration: none; color: inherit; margin-bottom: 4px; }
+        .sidebar-item:hover { background-color: #f2f2f2; }
+        .sidebar-item.active { background-color: #f2f2f2; font-weight: 700; }
+        .sidebar-text { font-size: 14px; }
 
-        /* 메인 콘텐츠 */
-        .main-content { margin-left: 240px; padding-top: 56px; flex: 1; min-height: 100vh; background-color: #fff; width: 100%; }
-        .category-chips { display: flex; gap: 12px; padding: 12px 24px; overflow-x: auto; white-space: nowrap; background-color: #fff; position: sticky; top: 56px; z-index: 998; }
-        .chip { background-color: rgba(0,0,0,0.05); border: none; padding: 8px 12px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; }
+        /* Main Content */
+        .main-content { margin-left: 240px; padding-top: 56px; flex: 1; width: 100%; transition: margin-left 0.3s ease; }
+        .category-chips { display: flex; gap: 12px; padding: 12px 24px; background-color: #fff; position: sticky; top: 56px; z-index: 998; overflow-x: auto; white-space: nowrap; }
+        .chip { background-color: rgba(0,0,0,0.05); border: none; padding: 8px 16px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; }
         .chip.active { background-color: #0f0f0f; color: #fff; }
 
-        /* 비디오 그리드 */
+        /* Video Grid */
         .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 40px 16px; padding: 24px; }
-        .video-card { display: flex; flex-direction: column; cursor: pointer; text-decoration: none; color: inherit; width: 100%; }
+        .video-card { display: flex; flex-direction: column; text-decoration: none; color: inherit; }
         .thumbnail-container { position: relative; width: 100%; padding-top: 56.25%; border-radius: 12px; overflow: hidden; background-color: #e5e5e5; }
-        .thumbnail-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
-        .duration-badge { position: absolute; bottom: 8px; right: 8px; background-color: rgba(0, 0, 0, 0.8); color: #fff; padding: 3px 4px; border-radius: 4px; font-size: 12px; font-weight: 500; }
+        .thumbnail-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
+        .video-card:hover .thumbnail-img { transform: scale(1.05); }
+        .duration-badge { position: absolute; bottom: 8px; right: 8px; background-color: rgba(0,0,0,0.8); color: #fff; padding: 3px 6px; border-radius: 4px; font-size: 12px; font-weight: 500; }
 
         .info-container { display: flex; margin-top: 12px; gap: 12px; }
-        .channel-avatar { width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; object-fit: cover; }
-        .video-title { font-size: 16px; font-weight: 600; line-height: 1.4; color: #0f0f0f; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 4px; }
-        .channel-name, .video-meta { font-size: 14px; color: #606060; }
+        .channel-avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+        .video-title { font-size: 16px; font-weight: 600; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .channel-name, .video-meta { font-size: 14px; color: #606060; margin-top: 4px; }
 
+        /* Mobile Responsive */
         @media (max-width: 768px) {
-            .header-center, .sidebar, .create-icon-btn, .menu-icon { display: none; }
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
             .main-content { margin-left: 0; }
+            .header-center { display: none; }
         }
     </style>
 </head>
@@ -90,39 +108,39 @@
     <div id="page-A" class="app-container">
         <header class="header">
             <div class="header-left">
-                <button class="menu-icon"><div class="icon"><svg viewBox="0 0 24 24"><path d="M21 6H3V5h18v1zm0 5H3v1h18v-1zm0 6H3v1h18v-1z"></path></svg></div></button>
+                <button class="menu-icon" onclick="toggleSidebar()"><div class="icon"><svg viewBox="0 0 24 24"><path d="M21 6H3V5h18v1zm0 5H3v1h18v-1zm0 6H3v1h18v-1z"></path></svg></div></button>
                 <a href="#" class="logo-container"><div class="logo-play-button"></div><span class="logo-text">MYTUBE</span></a>
             </div>
             <div class="header-center">
-                <form class="search-form" onsubmit="return false;">
-                    <input type="text" placeholder="검색" class="search-input">
-                    <button class="search-icon-btn"><div class="icon" style="width: 20px;"><svg viewBox="0 0 24 24"><path d="M20.87 20.17l-5.59-5.59C16.35 13.35 17 11.75 17 10c0-3.87-3.13-7-7-7s-7 3.13-7 7 3.13 7 7 7c1.75 0 3.35-.65 4.58-1.71l5.59 5.59.7-.71zM10 16c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"></path></svg></div></button>
-                </form>
+                <div class="search-form">
+                    <input type="text" class="search-input" placeholder="검색">
+                    <button class="search-icon-btn"><div class="icon" style="width:20px"><svg viewBox="0 0 24 24"><path d="M20.87 20.17l-5.59-5.59C16.35 13.35 17 11.75 17 10c0-3.87-3.13-7-7-7s-7 3.13-7 7 3.13 7 7 7c1.75 0 3.35-.65 4.58-1.71l5.59 5.59.7-.71zM10 16c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"></path></svg></div></button>
+                </div>
             </div>
             <div class="header-right">
-                <button class="create-icon-btn"><div class="icon" style="width: 20px;"><svg viewBox="0 0 24 24"><path d="M14 13h-3v3H9v-3H6v-2h3V8h2v3h3v2zm3-7H3v12h14v-6.39l4 1.83V8.56l-4 1.83V6m1-1v3.83L22 7v8l-4-1.83V19H2V5h16z"></path></svg></div>만들기</button>
+                <button class="create-btn"><div class="icon" style="width:20px"><svg viewBox="0 0 24 24"><path d="M14 13h-3v3H9v-3H6v-2h3V8h2v3h3v2zm3-7H3v12h14v-6.39l4 1.83V8.56l-4 1.83V6m1-1v3.83L22 7v8l-4-1.83V19H2V5h16z"></path></svg></div>만들기</button>
                 <img src="./image_3.png" class="user-avatar">
             </div>
         </header>
-        <nav class="sidebar">
+        <nav class="sidebar" id="sidebar-A">
             <a href="#" class="sidebar-item active"><div class="icon"><svg viewBox="0 0 24 24"><path d="M4 21V10.08l8-6.96 8 6.96V21h-6v-6h-4v6H4z"></path></svg></div><span class="sidebar-text">홈</span></a>
             <a href="#" class="sidebar-item"><div class="icon"><svg viewBox="0 0 24 24"><path d="M10 14.65v-5.3L15 12l-5 2.65zm7.77-4.33-1.2-.5L18 9.06c1.84-.96 2.53-3.23 1.56-5.06s-3.24-2.53-5.07-1.56L6 6.94c-1.29.68-2.07 2.04-2 3.49.06 1.42.94 2.66 2.23 3.14l1.2.5L6 14.94c-1.84.96-2.53 3.23-1.56 5.06s3.24 2.53 5.07 1.56l8.5-4.5c1.29-.68 2.06-2.04 2-3.49-.06-1.42-.94-2.66-2.23-3.14z"></path></svg></div><span class="sidebar-text">쇼츠</span></a>
         </nav>
         <main class="main-content">
-            <div class="category-chips"><button class="chip active">전체</button><button class="chip">성수동 핫플</button></div>
+            <div class="category-chips"><button class="chip active">전체</button><button class="chip">성수동 핫플</button><button class="chip">라이브</button></div>
             <div class="video-grid">
                 <a href="https://blogger18301.tistory.com/1" class="video-card">
-                    <div class="thumbnail-container"><img src="./image_1.png" class="thumbnail-img"><span class="duration-badge">1:00</span></div>
+                    <div class="thumbnail-container"><img src="./image_1.png" class="thumbnail-img"><span class="duration-badge">6:25</span></div>
                     <div class="info-container">
                         <img src="./image_3.png" class="channel-avatar">
-                        <div class="text-info"><h3 class="video-title">성수동 브이로그 요즘 핫플 정복!🔥 디올부터 하우스 노웨어까지✨</h3><div class="channel-name">E-비즈니스와 웹 애널리틱스_ A조</div><div class="video-meta">조회수 240회 • 1주 전</div></div>
+                        <div class="text-info"><h3 class="video-title">성수동 브이로그 요즘 핫플 정복!🔥 디올부터 하우스 노웨어까지✨</h3><div class="channel-name">E-비즈니스와 웹 애널리틱스_ A조</div><div class="video-meta">조회수 32.5만회 • 1주 전</div></div>
                     </div>
                 </a>
                 <a href="https://blogger18301.tistory.com/2" class="video-card">
-                    <div class="thumbnail-container"><img src="./image_2.png" class="thumbnail-img"><span class="duration-badge">1:00</span></div>
+                    <div class="thumbnail-container"><img src="./image_2.png" class="thumbnail-img"><span class="duration-badge">8:28</span></div>
                     <div class="info-container">
                         <img src="./image_3.png" class="channel-avatar">
-                        <div class="text-info"><h3 class="video-title">성수동 브이로그 요즘 핫플 정복!🔥 디올부터 하우스 노웨어까지✨</h3><div class="channel-name">E-비즈니스와 웹 애널리틱스_ A조</div><div class="video-meta">조회수 240회 • 1주 전</div></div>
+                        <div class="text-info"><h3 class="video-title">성수동 브이로그 요즘 핫플 정복!🔥 디올부터 하우스 노웨어까지✨</h3><div class="channel-name">E-비즈니스와 웹 애널리틱스_ A조</div><div class="video-meta">조회수 20.9만회 • 1주 전</div></div>
                     </div>
                 </a>
             </div>
@@ -132,65 +150,7 @@
     <div id="page-B" class="app-container">
         <header class="header">
             <div class="header-left">
-                <button class="menu-icon"><div class="icon"><svg viewBox="0 0 24 24"><path d="M21 6H3V5h18v1zm0 5H3v1h18v-1zm0 6H3v1h18v-1z"></path></svg></div></button>
+                <button class="menu-icon" onclick="toggleSidebar()"><div class="icon"><svg viewBox="0 0 24 24"><path d="M21 6H3V5h18v1zm0 5H3v1h18v-1zm0 6H3v1h18v-1z"></path></svg></div></button>
                 <a href="#" class="logo-container"><div class="logo-play-button"></div><span class="logo-text">MYTUBE</span></a>
             </div>
-            <div class="header-center">
-                <form class="search-form" onsubmit="return false;">
-                    <input type="text" placeholder="검색" class="search-input">
-                    <button class="search-icon-btn"><div class="icon" style="width: 20px;"><svg viewBox="0 0 24 24"><path d="M20.87 20.17l-5.59-5.59C16.35 13.35 17 11.75 17 10c0-3.87-3.13-7-7-7s-7 3.13-7 7 3.13 7 7 7c1.75 0 3.35-.65 4.58-1.71l5.59 5.59.7-.71zM10 16c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"></path></svg></div></button>
-                </form>
-            </div>
-            <div class="header-right">
-                <button class="create-icon-btn"><div class="icon" style="width: 20px;"><svg viewBox="0 0 24 24"><path d="M14 13h-3v3H9v-3H6v-2h3V8h2v3h3v2zm3-7H3v12h14v-6.39l4 1.83V8.56l-4 1.83V6m1-1v3.83L22 7v8l-4-1.83V19H2V5h16z"></path></svg></div>만들기</button>
-                <img src="./image_3.png" class="user-avatar">
-            </div>
-        </header>
-        <nav class="sidebar">
-            <a href="#" class="sidebar-item active"><div class="icon"><svg viewBox="0 0 24 24"><path d="M4 21V10.08l8-6.96 8 6.96V21h-6v-6h-4v6H4z"></path></svg></div><span class="sidebar-text">홈</span></a>
-            <a href="#" class="sidebar-item"><div class="icon"><svg viewBox="0 0 24 24"><path d="M10 14.65v-5.3L15 12l-5 2.65zm7.77-4.33-1.2-.5L18 9.06c1.84-.96 2.53-3.23 1.56-5.06s-3.24-2.53-5.07-1.56L6 6.94c-1.29.68-2.07 2.04-2 3.49.06 1.42.94 2.66 2.23 3.14l1.2.5L6 14.94c-1.84.96-2.53 3.23-1.56 5.06s3.24 2.53 5.07 1.56l8.5-4.5c1.29-.68 2.06-2.04 2-3.49-.06-1.42-.94-2.66-2.23-3.14z"></path></svg></div><span class="sidebar-text">쇼츠</span></a>
-        </nav>
-        <main class="main-content">
-            <div class="category-chips"><button class="chip active">전체</button><button class="chip">성수동 핫플</button></div>
-            <div class="video-grid">
-                <a href="https://blogger18301.tistory.com/1" class="video-card">
-                    <div class="thumbnail-container"><img src="./image_1.png" class="thumbnail-img"><span class="duration-badge">1:00</span></div>
-                    <div class="info-container">
-                        <img src="./image_3.png" class="channel-avatar">
-                        <div class="text-info"><h3 class="video-title">성수동 브이로그 요즘 핫플 정복!🔥 디올부터 하우스 노웨어까지✨</h3><div class="channel-name">E-비즈니스와 웹 애널리틱스_ A조</div><div class="video-meta">조회수 240회 • 1주 전</div></div>
-                    </div>
-                </a>
-                <a href="https://blogger18301.tistory.com/3" class="video-card">
-                    <div class="thumbnail-container"><img src="./image_5.png" class="thumbnail-img"><span class="duration-badge">1:00</span></div>
-                    <div class="info-container">
-                        <img src="./image_3.png" class="channel-avatar">
-                        <div class="text-info"><h3 class="video-title">성수동 브이로그 요즘 핫플 정복!🔥 디올부터 하우스 노웨어까지✨</h3><div class="channel-name">E-비즈니스와 웹 애널리틱스_ A조</div><div class="video-meta">조회수 240회 • 1주 전</div></div>
-                    </div>
-                </a>
-            </div>
-        </main>
-    </div>
-
-    <script>
-        function startRandomExperiment() {
-            const overlay = document.getElementById('landing-overlay');
-            overlay.style.opacity = '0';
-            
-            setTimeout(() => {
-                overlay.style.display = 'none';
-                
-                // 무작위 배정 (50:50 확률)
-                const isTypeB = Math.random() < 0.5;
-                
-                if (isTypeB) {
-                    document.getElementById('page-B').style.display = 'block';
-                } else {
-                    document.getElementById('page-A').style.display = 'block';
-                }
-                
-                window.scrollTo(0, 0);
-            }, 500);
-        }
-    </script>
-</body>
-</html>
+            <div class="header-right"><img src="./image_3.png" class="user-avatar"></div>
