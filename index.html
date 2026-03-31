@@ -173,3 +173,54 @@ if(f=!1,v=d.querySelector('#vwoCode'),cc={},-1<d.URL.indexOf('__vwo_disable__')|
                 <a href="#" class="logo-container"><div class="logo-play-button"></div><span class="logo-text">MYTUBE</span></a>
             </div>
             <div class="header-right"><img src="./image_3.png" class="user-avatar"></div>
+        </header>
+        <nav class="sidebar" id="sidebar-B">
+            <a href="#" class="sidebar-item active"><div class="icon"><svg viewBox="0 0 24 24"><path d="M4 21V10.08l8-6.96 8 6.96V21h-6v-6h-4v6H4z"></path></svg></div><span class="sidebar-text">홈</span></a>
+        </nav>
+        <main class="main-content">
+            <div class="category-chips"><button class="chip active">전체</button><button class="chip">성수동 핫플</button></div>
+            <div class="video-grid">
+                <a href="https://blogger18301.tistory.com/1" class="video-card">
+                    <div class="thumbnail-container"><img src="./image_1.png" class="thumbnail-img"><span class="duration-badge">6:25</span></div>
+                    <div class="info-container">
+                        <img src="./image_3.png" class="channel-avatar">
+                        <div class="text-info"><h3 class="video-title">성수동 브이로그 요즘 핫플 정복!🔥 디올부터 하우스 노웨어까지✨</h3><div class="channel-name">E-비즈니스와 웹 애널리틱스_ A조</div><div class="video-meta">조회수 32.5만회 • 1주 전</div></div>
+                    </div>
+                </a>
+                <a href="https://blogger18301.tistory.com/3" class="video-card">
+                    <div class="thumbnail-container"><img src="./image_5.png" class="thumbnail-img"><span class="duration-badge">8:28</span></div>
+                    <div class="info-container">
+                        <img src="./image_3.png" class="channel-avatar">
+                        <div class="text-info"><h3 class="video-title">성수동 브이로그 요즘 핫플 정복!🔥 디올부터 하우스 노웨어까지✨</h3><div class="channel-name">E-비즈니스와 웹 애널리틱스_ A조</div><div class="video-meta">조회수 20.9만회 • 1주 전</div></div>
+                    </div>
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sideA = document.getElementById('sidebar-A');
+            const sideB = document.getElementById('sidebar-B');
+            sideA.classList.toggle('open');
+            sideB.classList.toggle('open');
+        }
+
+        function startRandomExperiment() {
+            const overlay = document.getElementById('landing-overlay');
+            overlay.style.opacity = '0';
+            
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                const isTypeB = Math.random() < 0.5;
+                if (isTypeB) {
+                    document.getElementById('page-B').style.display = 'block';
+                } else {
+                    document.getElementById('page-A').style.display = 'block';
+                }
+                window.scrollTo(0, 0);
+            }, 500);
+        }
+    </script>
+</body>
+</html>
