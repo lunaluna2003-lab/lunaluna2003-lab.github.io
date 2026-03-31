@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     
     <style>
-        /* [1] 랜딩 페이지 스타일 (검정 바탕 & 미모티콘) */
+        /* [1] 랜딩 페이지 스타일 (검정 바탕 & image_4) */
         #landing-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
             background-color: #000; /* 검정 바탕색 */
@@ -16,12 +16,12 @@
             color: #fff; text-align: center; padding: 20px;
             transition: opacity 0.5s ease;
         }
-        /* 미모티콘 이미지 (정중앙 위쪽) */
+        /* 미모티콘 이미지 (파일명 image_4 적용) */
         .landing-img { 
             width: 250px; height: auto; margin-bottom: 30px; 
-            display: block; /* 가시성 확보 */
+            display: block; 
         }
-        /* 안내 문구 (문단 줄바꿈 적용) */
+        /* 안내 문구 (요청하신 위치에 줄바꿈 적용) */
         .landing-msg {
             font-family: 'Noto Sans KR', sans-serif;
             font-size: 18px; line-height: 1.8; max-width: 600px;
@@ -108,7 +108,7 @@
 <body>
 
     <div id="landing-overlay">
-        <img src="./image_10be01.jpg" alt="성수동 가이드" class="landing-img">
+        <img src="./image_4.png" alt="성수동 가이드" class="landing-img">
         
         <p class="landing-msg">
             당신이 성수동의 핫플에 방문하려고 한다.<br>
@@ -196,7 +196,7 @@
     </div>
 
     <script>
-        // 랜딩 페이지 시작 버튼 함수
+        // 랜딩 페이지에서 시작 버튼을 누를 때 실행되는 로직
         function startExperiment() {
             const overlay = document.getElementById('landing-overlay');
             const mainApp = document.getElementById('main-app');
@@ -204,12 +204,12 @@
             overlay.style.opacity = '0';
             setTimeout(() => {
                 overlay.style.display = 'none';
-                mainApp.style.display = 'flex';
+                mainApp.style.display = 'flex'; // 본래 페이지 노출
                 window.scrollTo(0, 0);
             }, 500);
         }
 
-        // 사이드바 토글 함수
+        // 본래 페이지 사이드바 토글 스크립트
         const sidebar = document.getElementById('sidebarMenu');
         const toggleBtnPC = document.getElementById('menuToggleBtnPC');
         const toggleBtnMobile = document.getElementById('menuToggleBtnMobile');
