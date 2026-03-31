@@ -3,51 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>성수동 핫플 탐방 A/B 테스트</title>
+    <title>MYTUBE - 성수동 핫플 정복!</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     
-    <script type='text/javascript' id='vwoCode'>
-        /* 이 자리에 원래 사용하시던 VWO Async SmartCode를 붙여넣으시면 됩니다. */
-    </script>
-
     <style>
-        /* 기본 리셋 */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Roboto', 'Noto Sans KR', sans-serif; background-color: #fff; color: #0f0f0f; overflow-x: hidden; }
-
-        /* [2] 1단계: 랜딩 페이지 (검정 바탕) */
+        /* [1] 랜딩 페이지 스타일 (검정 바탕) */
         #landing-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background-color: #000; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            z-index: 10000; color: #fff; text-align: center; padding: 20px; box-sizing: border-box;
+            background-color: #000;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 10000;
+            color: #fff; text-align: center; padding: 20px;
             transition: opacity 0.5s ease;
         }
         .landing-img { width: 250px; height: auto; margin-bottom: 30px; display: block; }
-        .landing-msg { font-size: 18px; line-height: 1.8; max-width: 600px; margin-bottom: 40px; font-weight: 400; color: #ffffff; }
-        .btn-start { background-color: #00a2ff; color: #fff; border: none; padding: 16px 60px; font-size: 18px; font-weight: 700; border-radius: 50px; cursor: pointer; transition: transform 0.2s; }
-        .btn-start:hover { transform: scale(1.05); }
+        .landing-msg {
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 18px; line-height: 1.8; max-width: 600px;
+            margin-bottom: 40px; font-weight: 400; color: #ffffff;
+        }
+        .btn-start {
+            background-color: #00a2ff; color: #fff; border: none; padding: 16px 60px;
+            font-size: 18px; font-weight: 700; border-radius: 50px;
+            cursor: pointer; box-shadow: 0 4px 15px rgba(0,162,255,0.4);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .btn-start:hover { transform: scale(1.05); background-color: #008be2; }
 
-        /* [3] 2단계: 깃허브 본래 목록 페이지 (유튜브 스타일) */
-        #main-app { display: none; width: 100%; padding-top: 56px; }
+        /* [2] 유튜브 스타일 리셋 */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Roboto', 'Noto Sans KR', sans-serif; background-color: #fff; color: #0f0f0f; overflow-x: hidden; display: flex; }
+
+        .icon { width: 24px; height: 24px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+        .icon svg { width: 100%; height: 100%; fill: currentColor; }
+
+        /* 상단 바 */
         .header { position: fixed; top: 0; left: 0; width: 100%; height: 56px; background-color: #fff; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; border-bottom: 1px solid #e5e5e5; z-index: 1000; }
-        .logo-text { font-size: 20px; font-weight: 700; color: #0f0f0f; text-decoration: none; }
-        
-        .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 40px 16px; padding: 24px; max-width: 1400px; margin: 0 auto; }
-        .video-card { display: flex; flex-direction: column; cursor: pointer; text-decoration: none; color: inherit; width: 100%; }
-        .thumbnail-container { position: relative; width: 100%; padding-top: 56.25%; border-radius: 12px; overflow: hidden; background-color: #eee; }
+        .header-left { display: flex; align-items: center; gap: 16px; }
+        .logo-container { display: flex; align-items: center; gap: 4px; text-decoration: none; color: inherit; }
+        .logo-play-button { width: 30px; height: 20px; background-color: #0f0f0f; border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+        .logo-play-button::after { content: ""; border-top: 5px solid transparent; border-left: 10px solid #fff; border-bottom: 5px solid transparent; }
+        .logo-text { font-family: 'Roboto', sans-serif; font-size: 20px; font-weight: 700; color: #0f0f0f; letter-spacing: -0.5px; }
+
+        .header-center { display: flex; align-items: center; gap: 8px; flex: 0 1 732px; justify-content: center; }
+        .search-form { display: flex; align-items: center; border: 1px solid #ccc; border-radius: 40px; overflow: hidden; height: 40px; flex: 1; max-width: 600px; }
+        .search-input { border: none; padding: 0 16px; font-size: 16px; flex: 1; outline: none; }
+        .search-icon-btn { width: 64px; height: 100%; border: none; background-color: #f8f8f8; border-left: 1px solid #ccc; cursor: pointer; }
+
+        .header-right { display: flex; align-items: center; gap: 12px; }
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
+
+        /* 사이드바 */
+        .sidebar { position: fixed; top: 56px; left: 0; width: 240px; height: calc(100vh - 56px); background-color: #fff; display: flex; flex-direction: column; padding: 12px; overflow-y: auto; z-index: 999; border-right: 1px solid #e5e5e5; }
+        .sidebar-item { display: flex; align-items: center; gap: 24px; padding: 10px 12px; cursor: pointer; border-radius: 10px; text-decoration: none; color: inherit; }
+        .sidebar-item.active { background-color: #f2f2f2; font-weight: 500; }
+
+        /* 메인 콘텐츠 */
+        .main-content { margin-left: 240px; padding-top: 56px; flex: 1; min-height: 100vh; background-color: #fff; }
+        .category-chips { display: flex; gap: 12px; padding: 12px 24px; overflow-x: auto; position: sticky; top: 56px; background: #fff; z-index: 998; }
+        .chip { background-color: rgba(0,0,0,0.05); border: none; padding: 8px 12px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; }
+        .chip.active { background-color: #0f0f0f; color: #fff; }
+
+        /* 비디오 그리드 */
+        .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 40px 16px; padding: 24px; }
+        .video-card { display: flex; flex-direction: column; cursor: pointer; text-decoration: none; color: inherit; }
+        .thumbnail-container { position: relative; width: 100%; padding-top: 56.25%; border-radius: 12px; overflow: hidden; background-color: #e5e5e5; }
         .thumbnail-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
-        .duration { position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.8); color: #fff; padding: 2px 4px; border-radius: 4px; font-size: 12px; }
+        .duration-badge { position: absolute; bottom: 8px; right: 8px; background-color: rgba(0,0,0,0.8); color: #fff; padding: 3px 4px; border-radius: 4px; font-size: 12px; }
         
-        .info-box { display: flex; margin-top: 12px; gap: 12px; }
-        .avatar { width: 36px; height: 36px; border-radius: 50%; background: #ddd; flex-shrink: 0; }
-        .v-title { font-size: 16px; font-weight: 600; line-height: 1.4; color: #0f0f0f; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .v-meta { font-size: 14px; color: #606060; margin-top: 4px; }
+        .info-container { display: flex; margin-top: 12px; gap: 12px; }
+        .channel-avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+        .video-title { font-size: 16px; font-weight: 600; line-height: 1.4; color: #0f0f0f; margin-bottom: 4px; }
+        .channel-name, .video-meta { font-size: 14px; color: #606060; }
+
+        @media (max-width: 768px) {
+            .header-center, .sidebar { display: none; }
+            .main-content { margin-left: 0; }
+        }
     </style>
 </head>
 <body>
 
     <div id="landing-overlay">
-        <img src="./image_4.png" alt="미모티콘" class="landing-img">
+        <img src="./image_4.png" alt="성수동 가이드" class="landing-img">
         <p class="landing-msg">
             당신이 성수동의 핫플에 방문하려고 한다.<br>
             만약, 관련 정보를 얻고 싶다면,<br>
@@ -56,70 +94,97 @@
         <button class="btn-start" onclick="startExperiment()">시작</button>
     </div>
 
-    <div id="main-app">
+    <div id="main-app" style="display: none; width: 100%;">
         <header class="header">
-            <a href="#" class="logo-text">🔴 MyTube 실험실</a>
-            <img src="./image_3.png" alt="프로필" style="width:32px; height:32px; border-radius:50%;">
+            <div class="header-left">
+                <div class="icon" style="padding:8px;"><svg viewBox="0 0 24 24"><path d="M21 6H3V5h18v1zm0 5H3v1h18v-1zm0 6H3v1h18v-1z"></path></svg></div>
+                <a href="#" class="logo-container">
+                    <div class="logo-play-button"></div>
+                    <span class="logo-text">MYTUBE</span>
+                </a>
+            </div>
+            <div class="header-center">
+                <div class="search-form">
+                    <input type="text" placeholder="검색" class="search-input">
+                    <button class="search-icon-btn"><div class="icon" style="margin:0 auto; width:20px;"><svg viewBox="0 0 24 24"><path d="M20.87 20.17l-5.59-5.59C16.35 13.35 17 11.75 17 10c0-3.87-3.13-7-7-7s-7 3.13-7 7 3.13 7 7 7c1.75 0 3.35-.65 4.58-1.71l5.59 5.59.7-.71zM10 16c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z"></path></svg></div></button>
+                </div>
+            </div>
+            <div class="header-right">
+                <img src="./image_3.png" alt="프로필" class="user-avatar">
+            </div>
         </header>
 
-        <main class="video-grid">
-            <a href="https://blogger18301.tistory.com/1" target="_blank" class="video-card">
-                <div class="thumbnail-container">
-                    <img src="./image_1.png" alt="성수동 낮" class="thumbnail-img">
-                    <span class="duration">1:00</span>
-                </div>
-                <div class="info-box">
-                    <div class="avatar"></div>
-                    <div>
-                        <h3 class="v-title">성수동 브이로그 요즘 핫플 정복!🔥 디올부터 하우스 노웨어까지✨</h3>
-                        <p class="v-meta">E-비즈니스 A조 • 조회수 240회</p>
-                    </div>
-                </div>
+        <nav class="sidebar">
+            <a href="#" class="sidebar-item active">
+                <div class="icon"><svg viewBox="0 0 24 24"><path d="M4 21V10.08l8-6.96 8 6.96V21h-6v-6h-4v6H4z"></path></svg></div>
+                <span class="sidebar-text">홈</span>
             </a>
+            <a href="#" class="sidebar-item"><div class="icon"><svg viewBox="0 0 24 24"><path d="M10 14.65v-5.3L15 12l-5 2.65zm7.77-4.33-1.2-.5L18 9.06c1.84-.96 2.53-3.23 1.56-5.06s-3.24-2.53-5.07-1.56L6 6.94c-1.29.68-2.07 2.04-2 3.49.06 1.42.94 2.66 2.23 3.14l1.2.5L6 14.94c-1.84.96-2.53 3.23-1.56 5.06s3.24 2.53 5.07 1.56l8.5-4.5c1.29-.68 2.06-2.04 2-3.49-.06-1.42-.94-2.66-2.23-3.14z"></path></svg></div><span class="sidebar-text">쇼츠</span></a>
+        </nav>
 
-            <a href="https://blogger18301.tistory.com/2" target="_blank" class="video-card">
-                <div class="thumbnail-container">
-                    <img id="dynamic-thumb" src="" alt="실험 영상" class="thumbnail-img">
-                    <span class="duration">1:00</span>
-                </div>
-                <div class="info-box">
-                    <div class="avatar"></div>
-                    <div>
-                        <h3 class="v-title">매운탕은 하나 요리사는 8명 #런닝맨 스타일 실험 페이지</h3>
-                        <p class="v-meta">E-비즈니스 A조 • 조회수 240회</p>
+        <main class="main-content">
+            <div class="category-chips">
+                <button class="chip active">전체</button>
+                <button class="chip">성수동 핫플</button>
+            </div>
+
+            <div class="video-grid" id="videoGrid">
+                <a href="#" class="video-card">
+                    <div class="thumbnail-container">
+                        <img src="./image_1.png" id="main-v1-img" class="thumbnail-img">
+                        <span class="duration-badge">1:00</span>
                     </div>
-                </div>
-            </a>
+                    <div class="info-container">
+                        <img src="./image_3.png" class="channel-avatar">
+                        <div class="text-info">
+                            <h3 class="video-title">성수동 브이로그 요즘 핫플 정복!🔥 (영상 A)</h3>
+                            <div class="channel-name">E-비즈니스와 웹 애널리틱스_ A조</div>
+                            <div class="video-meta">조회수 240회 • 1주 전</div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="#" class="video-card">
+                    <div class="thumbnail-container">
+                        <img src="./image_2.png" id="test-v2-img" class="thumbnail-img">
+                        <span class="duration-badge">1:00</span>
+                    </div>
+                    <div class="info-container">
+                        <img src="./image_3.png" class="channel-avatar">
+                        <div class="text-info">
+                            <h3 class="video-title">성수동 브이로그 요즘 핫플 정복!🔥 (영상 B)</h3>
+                            <div class="channel-name">E-비즈니스와 웹 애널리틱스_ A조</div>
+                            <div class="video-meta">조회수 240회 • 1주 전</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
         </main>
     </div>
 
     <script>
-        /**
-         * [핵심 로직] 접속 시 무작위로 이미지를 선택합니다.
-         * 50% 확률로 image_2.png (A안), 50% 확률로 image_5.png (B안)
-         */
-        document.addEventListener("DOMContentLoaded", function() {
-            const thumbImg = document.getElementById('dynamic-thumb');
-            const randomValue = Math.random(); // 0~1 사이의 난수 발생
-
-            if (randomValue < 0.5) {
-                thumbImg.src = "./image_2.png"; // A안: 원래 이미지
-            } else {
-                thumbImg.src = "./image_5.png"; // B안: 실험용 이미지
-            }
-        });
-
-        /**
-         * 시작 버튼 클릭 시 랜딩 페이지를 지우고 목록을 보여주는 함수
-         */
         function startExperiment() {
             const overlay = document.getElementById('landing-overlay');
             const mainApp = document.getElementById('main-app');
+            const testImg = document.getElementById('test-v2-img');
             
+            // 1. 무작위 그룹 결정 (0 또는 1)
+            // 0: A그룹 (기존 image_2) / 1: B그룹 (새로운 image_5)
+            const isGroupB = Math.random() < 0.5;
+
+            if (isGroupB) {
+                testImg.src = "./image_5.png";
+                console.log("실험 그룹: B (image_5 노출)");
+            } else {
+                testImg.src = "./image_2.png";
+                console.log("실험 그룹: A (image_2 노출)");
+            }
+
+            // 2. 화면 전환 효과
             overlay.style.opacity = '0';
             setTimeout(() => {
                 overlay.style.display = 'none';
-                mainApp.style.display = 'block';
+                mainApp.style.display = 'flex';
                 window.scrollTo(0, 0);
             }, 500);
         }
