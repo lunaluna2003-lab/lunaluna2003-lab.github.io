@@ -184,19 +184,19 @@
             side.classList.toggle('open');
         }
 
-        /* 수정된 코드: 랜덤 로직을 끄고 page-B로 고정 */
-function startRandomExperiment() {
-    const overlay = document.getElementById('landing-overlay');
-    overlay.style.opacity = '0';
-    setTimeout(() => {
-        overlay.style.display = 'none';
-        
-        // Math.random() 로직을 지우고, 무조건 page-B가 보이도록 설정
-        // 이렇게 해야 VWO에서 images[0], images[1]의 위치가 고정됩니다.
-        document.getElementById('page-B').style.display = 'block';
-        
-        window.scrollTo(0, 0);
-    }, 500);
+    function startRandomExperiment() {
+            const overlay = document.getElementById('landing-overlay');
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                const isTypeB = Math.random() < 0.5;
+                if (isTypeB) {
+                    document.getElementById('page-B').style.display = 'block';
+                } else {
+                    document.getElementById('page-A').style.display = 'block';
+                }
+                window.scrollTo(0, 0);
+            }, 500);
 }
         }
     </script>
