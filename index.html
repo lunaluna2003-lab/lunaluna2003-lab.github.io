@@ -103,7 +103,7 @@
             만약, 관련 정보를 얻고 싶다면,<br>
             어떤 영상을 시청하여 정보를 얻고 싶은지 선택해주세요
         </p>
-        <button class="btn-start" onclick="startApp()">시작</button>
+        <button class="btn-start" onclick="shuffleAndStart()">시작</button>
     </div>
 
     <div id="page-main" class="app-container">
@@ -129,20 +129,51 @@
         </nav>
         <main class="main-content">
             <div class="category-chips"><button class="chip active">전체</button><button class="chip">성수동 핫플</button><button class="chip">라이브</button></div>
-            <div class="video-grid">
-                <a href="https://blogger18301.tistory.com/1" class="video-card">
-                    <div class="thumbnail-container"><img src="./image_1.png" class="thumbnail-img"><span class="duration-badge">6:25</span></div>
-                    <div class="info-container"><img src="./image_3.png" class="channel-avatar"><div class="text-info"><h3 class="video-title">성수동 브이로그 요즘 핫플 정복!🔥 디올부터 하우스 노웨어까지✨</h3><div class="channel-name">E-비즈니스와 웹 애널리틱스_ A조</div><div class="video-meta">조회수 32.5만회 • 1주 전</div></div></div>
-                </a>
-                <a href="https://blogger18301.tistory.com/2" class="video-card">
-                    <div class="thumbnail-container"><img src="./image_2.png" class="thumbnail-img"><span class="duration-badge">8:28</span></div>
-                    <div class="info-container"><img src="./image_3.png" class="channel-avatar"><div class="text-info"><h3 class="video-title">성수동 브이로그 요즘 핫플 정복!🔥 디올부터 하우스 노웨어까지✨</h3><div class="channel-name">E-비즈니스와 웹 애널리틱스_ A조</div><div class="video-meta">조회수 20.9만회 • 1주 전</div></div></div>
-                </a>
-            </div>
+            
+            <div class="video-grid" id="video-grid-container">
+                </div>
         </main>
     </div>
 
     <script>
+        // 셔플 대상 카드 HTML 정의 (template)
+        const card1Template = `
+            <a href="https://blogger18301.tistory.com/1" class="video-card">
+                <div class="thumbnail-container"><img src="./image_1.png" class="thumbnail-img"><span class="duration-badge">6:25</span></div>
+                <div class="info-container"><img src="./image_3.png" class="channel-avatar"><div class="text-info"><h3 class="video-title">성수동 브이로그 요즘 핫플 정복!🔥 디올부터 하우스 노웨어까지✨</h3><div class="channel-name">E-비즈니스와 웹 애널리틱스_ A조</div><div class="video-meta">조회수 32.5만회 • 1주 전</div></div></div>
+            </a>
+        `;
+
+        const card2Template = `
+            <a href="https://blogger18301.tistory.com/2" class="video-card">
+                <div class="thumbnail-container"><img src="./image_2.png" class="thumbnail-img"><span class="duration-badge">8:28</span></div>
+                <div class="info-container"><img src="./image_3.png" class="channel-avatar"><div class="text-info"><h3 class="video-title">성수동 브이로그 요즘 핫플 정복!🔥 디올부터 하우스 노웨어까지✨</h3><div class="channel-name">E-비즈니스와 웹 애널리틱스_ A조</div><div class="video-meta">조회수 20.9만회 • 1주 전</div></div></div>
+            </a>
+        `;
+
+        // 배열 셔플 함수 (Fisher-Yates)
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        // 앱 시작 버튼 클릭 시 실행
+        function shuffleAndStart() {
+            const container = document.getElementById('video-grid-container');
+            const cards = [card1Template, card2Template];
+
+            // 1. 카드 순서 섞기
+            shuffle(cards);
+
+            // 2. 섞인 카드를 컨테이너에 넣기
+            container.innerHTML = cards.join('');
+
+            // 3. 앱 화면으로 전환
+            startApp();
+        }
+
         function toggleSidebar() {
             const side = document.getElementById('main-sidebar');
             side.classList.toggle('open');
@@ -153,7 +184,6 @@
             overlay.style.opacity = '0';
             setTimeout(() => {
                 overlay.style.display = 'none';
-                // 랜덤 로직 제거: 무조건 page-main 노출
                 document.getElementById('page-main').style.display = 'block';
                 window.scrollTo(0, 0);
             }, 500);
