@@ -2,79 +2,65 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>비주얼 선호도 테스트</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MYTUBE - 성수동 핫플 정복!</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     
     <style>
-        body {
-            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            background-color: #f8f9fa;
+        /* [1] 랜딩 페이지 스타일 (기존 디자인 복구) */
+        #landing-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('./image_13717c.jpg');
+            background-size: cover; background-position: center;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 10000; color: #fff; text-align: center; padding: 20px;
+            transition: opacity 0.5s ease;
         }
-        .container {
-            display: flex;
-            gap: 20px;
-            max-width: 1000px;
-            padding: 20px;
+        .landing-img { width: 250px; height: auto; margin-bottom: 30px; display: block; filter: drop-shadow(0 0 10px rgba(0,0,0,0.5)); }
+        .landing-msg { 
+            font-family: 'Noto Sans KR', sans-serif; font-size: 20px; line-height: 1.8; 
+            max-width: 700px; margin-bottom: 40px; font-weight: 500; color: #ffffff;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
         }
-        .video-box {
-            flex: 1;
-            text-align: center;
-            background: white;
-            padding: 15px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            cursor: pointer;
-            transition: transform 0.2s;
+        .btn-start { 
+            background-color: #00a2ff; color: #fff; border: none; padding: 18px 70px; 
+            font-size: 20px; font-weight: 700; border-radius: 50px; cursor: pointer; 
+            box-shadow: 0 4px 20px rgba(0,162,255,0.5); transition: all 0.3s ease; 
         }
-        .video-box:hover {
-            transform: translateY(-5px);
-        }
-        img {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-            object-fit: cover;
-        }
-        h2 {
-            font-size: 1.1rem;
-            margin-top: 15px;
-            color: #333;
-        }
-    </style>
-</head>
-<body>
+        .btn-start:hover { transform: scale(1.1); background-color: #008be2; }
 
-    <h1>더 끌리는 이미지를 클릭해주세요</h1>
-    
-    <div class="container">
-        <div class="video-box" id="actual-video">
-            <img src="image_2.png" alt="Real Image">
-            <h2 id="actual-title">성수동 핫플 정복!</h2>
-        </div>
+        /* [2] 유튜브 메인 스타일 */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Roboto', 'Noto Sans KR', sans-serif; background-color: #fff; color: #0f0f0f; overflow-x: hidden; }
+        .app-container { display: none; width: 100%; min-height: 100vh; }
+        .icon { width: 24px; height: 24px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+        .icon svg { width: 100%; height: 100%; fill: currentColor; }
 
-        <div class="video-box" id="test-video">
-            <img src="image_1.png" alt="Test Image">
-            <h2 id="test-title">성수동 핫플 정복!</h2>
-        </div>
-    </div>
+        /* Header */
+        .header { position: fixed; top: 0; left: 0; width: 100%; height: 56px; background-color: #fff; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; border-bottom: 1px solid #e5e5e5; z-index: 1000; }
+        .header-left { display: flex; align-items: center; gap: 16px; }
+        .menu-icon { cursor: pointer; background: none; border: none; padding: 8px; border-radius: 50%; display: flex; }
+        .menu-icon:hover { background-color: #f2f2f2; }
+        .logo-container { display: flex; align-items: center; gap: 4px; text-decoration: none; color: inherit; }
+        .logo-play-button { width: 30px; height: 20px; background-color: #ff0000; border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+        .logo-play-button::after { content: ""; border-top: 5px solid transparent; border-left: 10px solid #fff; border-bottom: 5px solid transparent; }
+        .logo-text { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; }
+        
+        .header-center { display: flex; align-items: center; gap: 8px; flex: 0 1 732px; justify-content: center; }
+        .search-form { display: flex; align-items: center; border: 1px solid #ccc; border-radius: 40px; overflow: hidden; height: 40px; flex: 1; max-width: 600px; margin-left: 32px; }
+        .search-input { border: none; padding: 0 16px; font-size: 16px; flex: 1; outline: none; }
+        .search-icon-btn { width: 64px; height: 100%; border: none; background-color: #f8f8f8; border-left: 1px solid #ccc; cursor: pointer; }
 
-    <script>
-        // 클릭 시 블로그로 이동하는 간단한 기능만 남깁니다.
-        const blogUrl = "https://blogger18301.tistory.com/1";
+        .header-right { display: flex; align-items: center; gap: 12px; }
+        .create-btn { display: flex; align-items: center; gap: 8px; border: 1px solid #ccc; border-radius: 20px; padding: 6px 14px; background-color: #f2f2f2; font-size: 14px; font-weight: 500; cursor: pointer; }
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
 
-        document.getElementById('actual-video').addEventListener('click', () => {
-            window.location.href = blogUrl;
-        });
+        /* Sidebar & Content */
+        .sidebar { position: fixed; top: 56px; left: 0; width: 240px; height: calc(100vh - 56px); background-color: #fff; padding: 12px; border-right: 1px solid #e5e5e5; z-index: 999; transition: transform 0.3s; }
+        .sidebar-item { display: flex; align-items: center; gap: 24px; padding: 10px 12px; border-radius: 10px; text-decoration: none; color: inherit; margin-bottom: 4px; }
+        .sidebar-item.active { background-color: #f2f2f2; font-weight: 700; }
+        .sidebar-text { font-size: 14px; }
 
-        document.getElementById('test-video').addEventListener('click', () => {
-            window.location.href = blogUrl;
-        });
-    </script>
-</body>
-</html>
+        .main-content { margin-left: 240px; padding-top: 56px; flex: 1; width: 100%; }
+        .category-chips { display: flex; gap: 12px; padding: 12px 24px; background-color: #fff; position: sticky; top: 56px; z-index:
