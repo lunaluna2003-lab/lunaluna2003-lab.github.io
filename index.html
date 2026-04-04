@@ -2,130 +2,79 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <link rel="preconnect" href="https://dev.visualwebsiteoptimizer.com" />
-    <script type='text/javascript' id='vwoCode'>
-        /* VWO 추적 코드는 그대로 유지하세요 */
-        window._vwo_code || (function() {
-            var w=window,d=document,account_id=1212776,version=2.2,settings_tolerance=2000,hide_element='body',hide_element_style='opacity:0 !important;filter:alpha(opacity=0) !important;background:none !important',f=0,v,cc={};
-            w._vwo_code=code;code.init();
-        })();
-    </script>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MYTUBE - 성수동 핫플 정복!</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>비주얼 선호도 테스트</title>
     
     <style>
-        /* 기존 스타일 그대로 유지 */
-        #landing-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('./image_4.png');
-            background-size: cover; background-position: center;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            z-index: 10000; color: #fff; text-align: center; padding: 20px; transition: opacity 0.5s ease;
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f8f9fa;
         }
-        .landing-img { width: 250px; height: auto; margin-bottom: 30px; display: block; filter: drop-shadow(0 0 10px rgba(0,0,0,0.5)); }
-        .landing-msg { font-family: 'Noto Sans KR', sans-serif; font-size: 20px; line-height: 1.8; max-width: 700px; margin-bottom: 40px; font-weight: 500; text-shadow: 2px 2px 10px rgba(0,0,0,0.8); }
-        .btn-start { background-color: #00a2ff; color: #fff; border: none; padding: 18px 70px; font-size: 20px; font-weight: 700; border-radius: 50px; cursor: pointer; box-shadow: 0 4px 20px rgba(0,162,255,0.5); transition: 0.3s; }
-        .btn-start:hover { transform: scale(1.1); }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Roboto', 'Noto Sans KR', sans-serif; background-color: #fff; color: #0f0f0f; overflow-x: hidden; }
-        .app-container { display: none; width: 100%; min-height: 100vh; }
-        .header { position: fixed; top: 0; left: 0; width: 100%; height: 56px; background-color: #fff; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; border-bottom: 1px solid #e5e5e5; z-index: 1000; }
-        .user-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
-        
-        .main-content { margin-left: 240px; padding-top: 56px; width: 100%; }
-        .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 40px 16px; padding: 24px; }
-        
-        /* 카드 클릭 영역 확보 */
-        .video-card { display: flex; flex-direction: column; text-decoration: none; color: inherit; cursor: pointer; }
-        .thumbnail-container { position: relative; width: 100%; padding-top: 56.25%; border-radius: 12px; overflow: hidden; background-color: #e5e5e5; }
-        .thumbnail-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
-        .duration-badge { position: absolute; bottom: 8px; right: 8px; background-color: rgba(0,0,0,0.8); color: #fff; padding: 3px 6px; border-radius: 4px; font-size: 12px; }
-        .info-container { display: flex; margin-top: 12px; gap: 12px; }
-        .channel-avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
-        .video-title { font-size: 16px; font-weight: 600; line-height: 1.4; margin-bottom: 4px; }
-        .channel-name { font-size: 14px; color: #606060; }
-
-        @media (max-width: 768px) { .main-content { margin-left: 0; } }
+        .container {
+            display: flex;
+            gap: 20px;
+            max-width: 1000px;
+            padding: 20px;
+        }
+        .video-box {
+            flex: 1;
+            text-align: center;
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .video-box:hover {
+            transform: translateY(-5px);
+        }
+        img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+        h2 {
+            font-size: 1.1rem;
+            margin-top: 15px;
+            color: #333;
+        }
     </style>
 </head>
 <body>
 
-    <div id="landing-overlay">
-        <img src="./image_4.png" class="landing-img">
-        <p class="landing-msg">
-            당신이 성수동의 핫플에 방문하려고 한다.<br>
-            만약, 관련 정보를 얻고 싶다면,<br>
-            어떤 영상을 시청하여 정보를 얻고 싶은지 선택해주세요
-        </p>
-        <button class="btn-start" onclick="shuffleAndStart()">시작</button>
-    </div>
+    <h1>더 끌리는 이미지를 클릭해주세요</h1>
+    
+    <div class="container">
+        <div class="video-box" id="actual-video">
+            <img src="image_2.png" alt="Real Image">
+            <h2 id="actual-title">성수동 핫플 정복!</h2>
+        </div>
 
-    <div id="page-main" class="app-container">
-        <header class="header">
-            <div style="font-weight: bold; font-size: 20px;">MYTUBE</div>
-            <img src="./image_3.png" class="user-avatar">
-        </header>
-        <main class="main-content">
-            <div class="video-grid" id="video-grid-container"></div>
-        </main>
+        <div class="video-box" id="test-video">
+            <img src="image_1.png" alt="Test Image">
+            <h2 id="test-title">성수동 핫플 정복!</h2>
+        </div>
     </div>
 
     <script>
-        // 1. 실제 사진 카드 (항상 고정 배치 - image_2.png)
-        const realCard = `
-            <a id="click-real" href="https://blogger18301.tistory.com/2" class="video-card">
-                <div class="thumbnail-container"><img src="./image_2.png" class="thumbnail-img"><span class="duration-badge">8:28</span></div>
-                <div class="info-container">
-                    <img src="./image_3.png" class="channel-avatar">
-                    <div class="text-info"><h3 class="video-title">성수동 브이로그 요즘 핫플 정복!🔥 디올부터 하우스 노웨어까지✨</h3><div class="channel-name">E-비즈니스와 웹 애널리틱스_ A조</div></div>
-                </div>
-            </a>
-        `;
+        // 클릭 시 블로그로 이동하는 간단한 기능만 남깁니다.
+        const blogUrl = "https://blogger18301.tistory.com/1";
 
-        // 2. AI 사진 카드 (image_1.png)
-        const aiCard = `
-            <a id="click-ai" href="https://blogger18301.tistory.com/1" class="video-card">
-                <div class="thumbnail-container"><img src="./image_1.png" class="thumbnail-img"><span class="duration-badge">6:25</span></div>
-                <div class="info-container">
-                    <img src="./image_3.png" class="channel-avatar">
-                    <div class="text-info"><h3 class="video-title">성수동 브이로그 요즘 핫플 정복!🔥 디올부터 하우스 노웨어까지✨</h3><div class="channel-name">E-비즈니스와 웹 애널리틱스_ A조</div></div>
-                </div>
-            </a>
-        `;
+        document.getElementById('actual-video').addEventListener('click', () => {
+            window.location.href = blogUrl;
+        });
 
-        // 3. AI 표기 사진 카드 (image_5.png)
-        const aiLabelCard = `
-            <a id="click-ai-label" href="https://blogger18301.tistory.com/1" class="video-card">
-                <div class="thumbnail-container"><img src="./image_5.png" class="thumbnail-img"><span class="duration-badge">6:25</span></div>
-                <div class="info-container">
-                    <img src="./image_3.png" class="channel-avatar">
-                    <div class="text-info"><h3 class="video-title">[AI 생성] 성수동 브이로그 요즘 핫플 정복!🔥✨</h3><div class="channel-name">E-비즈니스와 웹 애널리틱스_ A조</div></div>
-                </div>
-            </a>
-        `;
-
-        function shuffleAndStart() {
-            const container = document.getElementById('video-grid-container');
-            
-            // 오른쪽 자리에 올 AI 카드를 랜덤 결정 (AI vs AI표기)
-            const randomAICard = Math.random() < 0.5 ? aiCard : aiLabelCard;
-            
-            // [중요] 실제 사진(realCard)을 무조건 앞에 배치하여 고정함
-            const fixedOrder = [realCard, randomAICard];
-
-            container.innerHTML = fixedOrder.join('');
-
-            // 화면 전환
-            const overlay = document.getElementById('landing-overlay');
-            overlay.style.opacity = '0';
-            setTimeout(() => {
-                overlay.style.display = 'none';
-                document.getElementById('page-main').style.display = 'block';
-                window.scrollTo(0, 0);
-            }, 500);
-        }
+        document.getElementById('test-video').addEventListener('click', () => {
+            window.location.href = blogUrl;
+        });
     </script>
 </body>
 </html>
