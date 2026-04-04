@@ -10,7 +10,7 @@
         html, body {
             margin: 0; padding: 0; width: 100%; height: 100%;
             opacity: 1 !important; visibility: visible !important; display: block !important;
-            background-color: #fff; font-family: sans-serif;
+            background-color: #f9f9f9; font-family: sans-serif;
         }
 
         /* 랜딩 페이지 (시작 화면) */
@@ -19,35 +19,63 @@
             background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('./image_5.png'); /* 배경: image_5.png */
             background-size: cover; background-position: center;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            z-index: 9999; color: white; text-align: center;
+            z-index: 9999; color: white; text-align: center; padding: 20px;
         }
 
-        .landing-img { width: 200px; margin-bottom: 20px; }
+        .landing-img { width: 200px; margin-bottom: 20px; filter: drop-shadow(0 0 10px rgba(0,0,0,0.3)); }
         .btn-start { 
             background: #00a2ff; color: white; border: none; padding: 15px 50px; 
             font-size: 18px; border-radius: 30px; cursor: pointer; font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,162,255,0.4);
         }
 
-        /* 메인 화면 (처음엔 숨김) */
+        /* 메인 앱 화면 (처음엔 숨김) */
         #main-app { display: none; padding-top: 60px; }
-        .header { position: fixed; top: 0; width: 100%; height: 56px; background: white; border-bottom: 1px solid #ddd; display: flex; align-items: center; padding: 0 20px; z-index: 100; }
-        .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding: 20px; }
-        .video-card { text-decoration: none; color: black; }
-        .video-card img { width: 100%; border-radius: 12px; }
+        
+        /* [수정] 유튜브 스타일 헤더 */
+        .header { 
+            position: fixed; top: 0; width: 100%; height: 56px; 
+            background: white; border-bottom: 1px solid #e5e5e5; 
+            display: flex; align-items: center; justify-content: space-between; 
+            padding: 0 16px; z-index: 100; 
+        }
+        
+        /* 유튜브 로고 */
+        .logo-box { display: flex; align-items: center; text-decoration: none; color: inherit; }
+        .logo-play { width: 30px; height: 20px; background: red; border-radius: 4px; display: flex; align-items: center; justify-content: center; margin-right: 8px; }
+        .logo-play::after { content: ""; border-top: 5px solid transparent; border-left: 10px solid #fff; border-bottom: 5px solid transparent; }
+        .logo-text { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; }
+
+        /* [추가] 유저 프로필 */
+        .user-profile { 
+            width: 32px; height: 32px; border-radius: 50%; 
+            object-fit: cover; border: 1px solid #ddd;
+        }
+
+        /* 비디오 그리드 */
+        .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px 16px; padding: 24px; }
+        .video-card { text-decoration: none; color: black; display: flex; flex-direction: column; }
+        .video-card img { width: 100%; border-radius: 12px; aspect-ratio: 16/9; object-fit: cover; }
+        .video-title { font-size: 16px; font-weight: 600; margin-top: 12px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .channel-info { font-size: 14px; color: #606060; margin-top: 4px; }
     </style>
 </head>
 <body>
 
     <div id="landing-overlay">
-        <img src="./image_4.png" class="landing-img"> <h2>성수동 핫플 정복!</h2>
-        <p>어떤 영상을 보고 싶으신가요?</p>
+        <img src="./image_4.png" class="landing-img"> <h2 style="font-size:24px; text-shadow:2px 2px 10px rgba(0,0,0,0.5);">성수동 핫플 정복!🔥</h2>
+        <p style="font-size:18px; margin-bottom:30px; text-shadow:2px 2px 10px rgba(0,0,0,0.5);">어떤 영상을 보고 싶으신가요?</p>
         <button class="btn-start" onclick="showMain()">시작하기</button>
     </div>
 
     <div id="main-app">
         <div class="header">
-            <strong style="color:red; font-size:20px;">MYTUBE</strong>
-        </div>
+            <a href="#" class="logo-box">
+                <div class="logo-play"></div>
+                <span class="logo-text">MYTUBE</span>
+            </a>
+            <img src="./image_3.png" class="user-profile" alt="User profile"> </div>
+
         <div class="video-grid" id="grid">
             </div>
     </div>
@@ -56,8 +84,18 @@
         function showMain() {
             // 카드 데이터 (image_1.png, image_2.png 사용)
             const cards = [
-                `<a href="https://blogger18301.tistory.com/1" class="video-card"><img src="./image_1.png"><h3>성수동 브이로그 (A)</h3></a>`,
-                `<a href="https://blogger18301.tistory.com/1" class="video-card"><img src="./image_2.png"><h3>성수동 브이로그 (B)</h3></a>`
+                `<a href="https://blogger18301.tistory.com/1" class="video-card">
+                    <img src="./image_1.png">
+                    <h3 class="video-title">성수동 브이로그 요즘 핫플 정복!🔥 디올부터 하우스 노웨어까지✨ (A버전)</h3>
+                    <div class="channel-info">E-비즈니스와 웹 애널리틱스 A조</div>
+                    <div class="channel-info">조회수 10.5만회 • 1주 전</div>
+                </a>`,
+                `<a href="https://blogger18301.tistory.com/1" class="video-card">
+                    <img src="./image_2.png">
+                    <h3 class="video-title">성수동 브이로그 요즘 ホット플 정복!🔥 디올부터 하우스 노웨어까지✨ (B버전)</h3>
+                    <div class="channel-info">E-비즈니스와 웹 애널리틱스 A조</div>
+                    <div class="channel-info">조회수 20.9만회 • 1주 전</div>
+                </a>`
             ];
 
             // 랜덤하게 섞기
