@@ -2,53 +2,147 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MYTUBE - 성수동 핫플</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MYTUBE - 성수동 핫플 정복!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     
     <style>
-        /* 기본 설정: 흰 화면 방지를 위해 opacity 강제 설정 */
-        html, body {
-            margin: 0; padding: 0; width: 100%; height: 100%;
-            opacity: 1 !important; visibility: visible !important; display: block !important;
-            background-color: #ffffff; font-family: 'Noto Sans KR', sans-serif;
-        }
-
-        /* 랜딩 페이지 */
+        /* [1] 랜딩 페이지 스타일 */
         #landing-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #ffffff;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('./image_13717c.jpg');
+            background-size: cover; background-position: center;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            z-index: 9999; text-align: center; padding: 20px;
+            z-index: 10000; color: #fff; text-align: center; padding: 20px;
+            transition: opacity 0.5s ease;
         }
-        .landing-img { width: 220px; height: auto; margin-bottom: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        .landing-title { font-size: 26px; font-weight: 700; color: #0f0f0f; margin-bottom: 10px; }
-        .landing-msg { font-size: 16px; color: #606060; line-height: 1.6; margin-bottom: 35px; }
-        .btn-start { background: #00a2ff; color: white; border: none; padding: 16px 60px; font-size: 18px; border-radius: 50px; cursor: pointer; font-weight: bold; transition: transform 0.2s ease; }
+        .landing-img { width: 250px; height: auto; margin-bottom: 30px; display: block; filter: drop-shadow(0 0 10px rgba(0,0,0,0.5)); }
+        .landing-msg { 
+            font-family: 'Noto Sans KR', sans-serif; font-size: 20px; line-height: 1.8; 
+            max-width: 700px; margin-bottom: 40px; font-weight: 500; color: #ffffff;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+        }
+        .btn-start { 
+            background-color: #00a2ff; color: #fff; border: none; padding: 18px 70px; 
+            font-size: 20px; font-weight: 700; border-radius: 50px; cursor: pointer; 
+            box-shadow: 0 4px 20px rgba(0,162,255,0.5); transition: all 0.3s ease; 
+        }
+        .btn-start:hover { transform: scale(1.1); background-color: #008be2; }
 
-        /* 메인 앱 */
-        #main-app { display: none; padding-top: 56px; background-color: #f9f9f9; min-height: 100vh; }
-        .header { position: fixed; top: 0; width: 100%; height: 56px; background: white; border-bottom: 1px solid #e5e5e5; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; z-index: 100; }
-        .logo-box { display: flex; align-items: center; text-decoration: none; color: inherit; }
-        .logo-play { width: 30px; height: 20px; background: red; border-radius: 4px; display: flex; align-items: center; justify-content: center; margin-right: 8px; }
-        .logo-play::after { content: ""; border-top: 5px solid transparent; border-left: 10px solid #fff; border-bottom: 5px solid transparent; }
-        .logo-text { font-size: 18px; font-weight: 700; }
-        .user-profile { width: 32px; height: 32px; border-radius: 50%; }
+        /* [2] 유튜브 메인 스타일 */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Roboto', 'Noto Sans KR', sans-serif; background-color: #fff; color: #0f0f0f; overflow-x: hidden; }
+        .app-container { display: none; width: 100%; min-height: 100vh; }
+        
+        /* Header */
+        .header { position: fixed; top: 0; left: 0; width: 100%; height: 56px; background-color: #fff; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; border-bottom: 1px solid #e5e5e5; z-index: 1000; }
+        .header-left { display: flex; align-items: center; gap: 16px; }
+        .logo-container { display: flex; align-items: center; gap: 4px; text-decoration: none; color: inherit; }
+        .logo-play-button { width: 30px; height: 20px; background-color: #0f0f0f; border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+        .logo-play-button::after { content: ""; border-top: 5px solid transparent; border-left: 10px solid #fff; border-bottom: 5px solid transparent; }
+        .logo-text { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; }
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
 
-        /* 비디오 그리드: 두 장의 사진을 나란히 배치 */
+        /* Content */
+        .main-content { padding-top: 56px; width: 100%; max-width: 1200px; margin: 0 auto; }
+        .category-chips { display: flex; gap: 12px; padding: 12px 24px; overflow-x: auto; white-space: nowrap; }
+        .chip { background-color: rgba(0,0,0,0.05); border: none; padding: 8px 16px; border-radius: 8px; font-size: 14px; font-weight: 500; }
+        .chip.active { background-color: #0f0f0f; color: #fff; }
+
+        /* Video Grid - 2열 고정 */
         .video-grid { 
             display: grid; 
             grid-template-columns: repeat(2, 1fr); 
-            gap: 30px 16px; 
+            gap: 40px 16px; 
             padding: 24px; 
-            max-width: 1200px; 
-            margin: 0 auto; 
         }
-        .video-card { text-decoration: none; color: black; cursor: pointer; }
-        .video-card img { width: 100%; border-radius: 12px; aspect-ratio: 16/9; object-fit: cover; }
-        .video-title { font-size: 16px; font-weight: 600; margin-top: 12px; line-height: 1.4; }
-        .channel-info { font-size: 14px; color: #606060; margin-top: 4px; }
-    </style>
+        .video-card { display: flex; flex-direction: column; text-decoration: none; color: inherit; }
+        .thumbnail-container { position: relative; width: 100%; padding-top: 56.25%; border-radius: 12px; overflow: hidden; background-color: #e5e5e5; }
+        .thumbnail-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+        .duration-badge { position: absolute; bottom: 8px; right: 8px; background-color: rgba(0,0,0,0.8); color: #fff; padding: 3px 6px; border-radius: 4px; font-size: 12px; font-weight: 500; }
+        .info-container { display: flex; margin-top: 12px; gap: 12px; }
+        .channel-avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
+        .video-title { font-size: 16px; font-weight: 600; line-height: 1.4; margin-bottom: 4px; }
+        .channel-name, .video-meta { font-size: 14px; color: #606060; }
 
-    <script type='text/javascript' id='vwoCode'>
-        window._vwo_code || (function() {
-            var account_id=1212776, version=2.2, settings_tolerance=
+        @media (max-width: 600px) {
+            .video-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="landing-overlay">
+        <img src="./image_4.png" alt="성수동 가이드" class="landing-img">
+        <p class="landing-msg">
+            당신이 성수동의 핫플에 방문하려고 한다.<br>
+            만약, 관련 정보를 얻고 싶다면,<br>
+            어떤 영상을 시청하여 정보를 얻고 싶은지 선택해주세요
+        </p>
+        <button class="btn-start" onclick="startApp()">시작</button>
+    </div>
+
+    <div id="page-main" class="app-container">
+        <header class="header">
+            <div class="header-left">
+                <a href="#" class="logo-container"><div class="logo-play-button"></div><span class="logo-text">MYTUBE</span></a>
+            </div>
+            <div class="header-right">
+                <img src="./image_3.png" class="user-avatar">
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="category-chips">
+                <button class="chip active">전체</button>
+                <button class="chip">성수동 핫플</button>
+            </div>
+            
+            <div class="video-grid">
+                <a href="https://blogger18301.tistory.com/1" class="video-card">
+                    <div class="thumbnail-container">
+                        <img src="./image_1.png" class="thumbnail-img">
+                        <span class="duration-badge">6:25</span>
+                    </div>
+                    <div class="info-container">
+                        <img src="./image_3.png" class="channel-avatar">
+                        <div class="text-info">
+                            <h3 class="video-title">성수동 브이로그 요즘 핫플 정복!🔥 디올부터 하우스 노웨어까지✨</h3>
+                            <div class="channel-name">E-비즈니스와 웹 애널리틱스_ A조</div>
+                            <div class="video-meta">조회수 32.5만회 • 1주 전</div>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://blogger18301.tistory.com/2" class="video-card">
+                    <div class="thumbnail-container">
+                        <img src="./image_2.png" class="thumbnail-img">
+                        <span class="duration-badge">8:28</span>
+                    </div>
+                    <div class="info-container">
+                        <img src="./image_3.png" class="channel-avatar">
+                        <div class="text-info">
+                            <h3 class="video-title">성수동 브이로그 요즘 핫플 정복!🔥 디올부터 하우스 노웨어까지✨</h3>
+                            <div class="channel-name">E-비즈니스와 웹 애널리틱스_ A조</div>
+                            <div class="video-meta">조회수 20.9만회 • 1주 전</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // 앱 시작 함수
+        function startApp() {
+            const overlay = document.getElementById('landing-overlay');
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                document.getElementById('page-main').style.display = 'block';
+                window.scrollTo(0, 0);
+            }, 500);
+        }
+    </script>
+</body>
+</html>
