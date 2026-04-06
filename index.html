@@ -6,7 +6,7 @@
     <title>MYTUBE - 성수동 핫플</title>
     
     <style>
-        /* 기본 설정 */
+        /* 기본 설정: 흰 화면 방지를 위해 opacity 강제 설정 */
         html, body {
             margin: 0; padding: 0; width: 100%; height: 100%;
             opacity: 1 !important; visibility: visible !important; display: block !important;
@@ -20,34 +20,35 @@
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             z-index: 9999; text-align: center; padding: 20px;
         }
-
-        .landing-img { 
-            width: 220px; height: auto; margin-bottom: 25px; 
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        }
-
+        .landing-img { width: 220px; height: auto; margin-bottom: 25px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
         .landing-title { font-size: 26px; font-weight: 700; color: #0f0f0f; margin-bottom: 10px; }
         .landing-msg { font-size: 16px; color: #606060; line-height: 1.6; margin-bottom: 35px; }
+        .btn-start { background: #00a2ff; color: white; border: none; padding: 16px 60px; font-size: 18px; border-radius: 50px; cursor: pointer; font-weight: bold; transition: transform 0.2s ease; }
 
-        .btn-start { 
-            background: #00a2ff; color: white; border: none; padding: 16px 60px; 
-            font-size: 18px; border-radius: 50px; cursor: pointer; font-weight: bold;
-            transition: transform 0.2s ease;
-        }
-        .btn-start:hover { transform: scale(1.05); }
-
-        /* 메인 앱 화면 */
+        /* 메인 앱 */
         #main-app { display: none; padding-top: 56px; background-color: #f9f9f9; min-height: 100vh; }
-        
-        .header { 
-            position: fixed; top: 0; width: 100%; height: 56px; 
-            background: white; border-bottom: 1px solid #e5e5e5; 
-            display: flex; align-items: center; justify-content: space-between; 
-            padding: 0 16px; z-index: 100; 
-        }
-        
+        .header { position: fixed; top: 0; width: 100%; height: 56px; background: white; border-bottom: 1px solid #e5e5e5; display: flex; align-items: center; justify-content: space-between; padding: 0 16px; z-index: 100; }
         .logo-box { display: flex; align-items: center; text-decoration: none; color: inherit; }
         .logo-play { width: 30px; height: 20px; background: red; border-radius: 4px; display: flex; align-items: center; justify-content: center; margin-right: 8px; }
         .logo-play::after { content: ""; border-top: 5px solid transparent; border-left: 10px solid #fff; border-bottom: 5px solid transparent; }
-        .logo-text { font-size:
+        .logo-text { font-size: 18px; font-weight: 700; }
+        .user-profile { width: 32px; height: 32px; border-radius: 50%; }
+
+        /* 비디오 그리드: 두 장의 사진을 나란히 배치 */
+        .video-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 30px 16px; 
+            padding: 24px; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+        }
+        .video-card { text-decoration: none; color: black; cursor: pointer; }
+        .video-card img { width: 100%; border-radius: 12px; aspect-ratio: 16/9; object-fit: cover; }
+        .video-title { font-size: 16px; font-weight: 600; margin-top: 12px; line-height: 1.4; }
+        .channel-info { font-size: 14px; color: #606060; margin-top: 4px; }
+    </style>
+
+    <script type='text/javascript' id='vwoCode'>
+        window._vwo_code || (function() {
+            var account_id=1212776, version=2.2, settings_tolerance=
